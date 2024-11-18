@@ -1,13 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+
+/* Swiper Button Base Styling */
+.swiper-button-prev,
+.swiper-button-next {
+  color: white !important; /* White icon color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  opacity: 0;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Hover Effects for Buttons */
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  opacity: 1;
+  background-color: rgba(168, 207, 212, 0.5);
+  color: gray;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+  transform: scale(1.2);
+}
+
+.bg-teeth-pattern {
+  background-image: linear-gradient(145deg, transparent 50%, white 50%), linear-gradient(135deg, transparent 50%, white 50%);
+  background-size: 15px 8px;
+  background-position: 0 0, 0 4px;
+  transform: rotate(180deg);
+  background-repeat: repeat-x;
+  height: 20px;
+  position: absolute;
+  top: -12px;
+}
+
+.accordion__item + .accordion__item {
+  border-top: 0px !important;
+}
+
+/* Hide scrollbar while allowing scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Hides scrollbar in Webkit-based browsers */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* Hides scrollbar in Internet Explorer 10+ */
+  scrollbar-width: none; /* Hides scrollbar in Firefox */
+}
+
+
