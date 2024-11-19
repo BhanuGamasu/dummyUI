@@ -38,6 +38,7 @@ const CustomerProductOverview = () => {
     const [totalPrice, setTotalPrice] = useState(0); // State for total price
     const [originalPrice, setOriginalPrice] = useState();
     const [discountPrice, setDiscountPrice] = useState();
+    const [isInCart, setIsInCart] = useState(false); // Tracks if the item is in the cart
 
     // Fetch product details
     useEffect(() => {
@@ -169,11 +170,33 @@ const CustomerProductOverview = () => {
         setSelectedWeight(weight); // Set the selected weight
     };
 
+    const handleAddToCart = () => {
+        dispatch(addToCart(product)); // Add product to Redux cart
+        setIsInCart(true); // Set state to show "Go to Cart"
+        // setTimeout(() => {
+        //     // Optional: navigate to the cart page after some delay
+        //     navigate("/cart");
+        // }, 1500); // Adjust delay as needed
+    };
+
     const handleSubmit = () => {
-        // Print the selected form data to console
-        navigate("/buyNow");
+        // Navigate with state
+        navigate("/buyNow", {
+            state: {
+                product,
+                quantity,
+                selectedWeight,
+                originalPrice,
+                discountPrice,
+                totalPrice
+            }
+        });
+        console.log("Selected Product:", totalPrice);
         console.log("Selected Quantity:", quantity);
         console.log("Selected Weight:", selectedWeight);
+        console.log("Selected Product:", product);
+        console.log("Discount Price:", discountPrice);
+        console.log("Orginal Price:", originalPrice);
     };
 
     const handleFavoriteClick = () => {
@@ -312,14 +335,20 @@ const CustomerProductOverview = () => {
                             ))}
                         </motion.button>
 
-                        {/* Add to Cart with Cart Logo */}
-                        <button
-                            onClick={() => dispatch(addToCart(product))}
-                            className="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-gray-100 transition"
+                        <motion.button
+                            onClick={isInCart ? () => navigate("/cart") : handleAddToCart}
+                            className={`px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg flex items-center justify-center gap-2 transition-all duration-300 ${isInCart ? "bg-green-500 text-white" : "hover:bg-gray-100"
+                                }`}
+                            whileTap={{ scale: 0.95 }} // Animation on click
+                            animate={{
+                                backgroundColor: isInCart ? "#22c55e" : "#fff", // Animate color
+                                color: isInCart ? "#fff" : "#374151", // Animate text color
+                                scale: isInCart ? 1.1 : 1, // Slightly enlarge when in cart
+                            }}
                         >
                             <FaShoppingCart className="text-lg" />
-                            <span>Add to Cart</span>
-                        </button>
+                            <span>{isInCart ? "Go to Cart" : "Add to Cart"}</span>
+                        </motion.button>
 
                         {/* Buy Now with Pink Background */}
                         <button
