@@ -40,6 +40,11 @@ const CustomerProductOverview = () => {
     const [discountPrice, setDiscountPrice] = useState();
     const [isInCart, setIsInCart] = useState(false); // Tracks if the item is in the cart
 
+    useEffect(() => {
+        // Scroll to the top of the page when the component mounts
+        window.scrollTo(0, 0);
+    }, []);
+
     // Fetch product details
     useEffect(() => {
         const fetchProduct = async () => {

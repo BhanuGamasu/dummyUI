@@ -9,6 +9,7 @@ import BuyNow from './Components/BuyNow';
 const CustomerHome = lazy(() => import("./Components/CustomerFolder/CustomerHome"));
 const CustomerProductOverview = lazy(() => import("./Components/CustomerFolder/CustomerProductOverview"));
 const AddAddress = lazy(() => import("./Components/AddAddress"));
+const AddressModal = lazy(() => import("./Components/AddressModal"));
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/favourates" element={<Favourates />} />
           <Route path="/addAddress" element={<AddAddress />} />
+          <Route path="/addressModal" element={<AddressModal />} />
         </Routes>
       </Suspense>
     </div>

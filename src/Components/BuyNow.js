@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import Address from "./Address";
 import Coupons from "./Coupons";
+import AddressModal from "./AddressModal";
 
 const BuyNow = () => {
     const location = useLocation();
@@ -18,12 +19,38 @@ const BuyNow = () => {
     const [appliedOffer, setAppliedOffer] = useState(null); // Stores applied offer details
     const [quantity, setQuantity] = useState(initialQuantity);
     const [totalPrice, setTotalPrice] = useState(initialTotalPrice);
+    const [showAddressModal, setShowAddressModal] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    const [updatedDeliveryAddress, setUpdatedDeliveryAddress] = useState('');
 
     const offers = [
         { title: "Flat ₹200 Off", description: "Use code SAVE200 on orders above ₹1000.", code: "SAVE200", couponDiscount: 10, },
         { title: "10% Cashback", description: "Use code CASHBACK10 on all prepaid orders.", code: "CASHBACK10", couponDiscount: 20, },
         { title: "Free Shipping", description: "Use code FREESHIP for free delivery on orders above ₹500.", code: "FREESHIP", couponDiscount: 30, },
     ];
+
+    const addresses = [
+        {
+            name: "Ram Kumawat",
+            details:
+                "659, Venkat Enclave, TY Raju Road, Whitefields, Hyderabad-499963, Arunodaya Colony, Madhapur, Hyderabad, Telangana - 499963",
+            phone: "9876543210",
+        },
+        {
+            name: "Shyam Verma",
+            details:
+                "245, Lotus Apartments, Green Park, Mumbai-400053, Maharashtra",
+            phone: "8765432109",
+        },
+    ];
+
+    const handleEditAddress = (index) => {
+        console.log("Edit address at index:", index);
+    };
+
+    const handleDeleteAddress = (index) => {
+        console.log("Delete address at index:", index);
+    };
 
     const handlePlaceOrder = () => {
         const orderDetails = {
@@ -41,7 +68,7 @@ const BuyNow = () => {
                 couponDiscount: couponDiscount,
                 finalTotal: totalPrice,
             },
-            address: addressDetails,
+            address: updatedDeliveryAddress,
             appliedCoupon: appliedOffer ? appliedOffer.code : null,
         };
 
@@ -67,12 +94,6 @@ const BuyNow = () => {
     };
 
 
-    const addressDetails = {
-        type: "Home/Office",
-        address: "D No: 245, Aru Colony, Yejix, Jeh, Andhra Pradesh",
-    };
-
-
     const handleFavoriteClick = () => {
         setIsFavorite(!isFavorite);
         setBubbles((prevBubbles) => [
@@ -81,10 +102,6 @@ const BuyNow = () => {
             { id: Date.now() + 2, direction: 1 },
         ]);
     };
-
-    const navigateToAddAddress = () => {
-        navigate("/addAddress")
-    }
 
     const incrementQuantityBuyNow = () => {
         setQuantity((prevQuantity) => {
@@ -121,6 +138,15 @@ const BuyNow = () => {
             setIsPromocodeApplied(false); // Reset this state if no offer is applied
         }
     }, [appliedOffer]);
+
+    // Log the selected address whenever it changes
+    useEffect(() => {
+        if (selectedAddress !== null) {
+            setShowAddressModal(false);
+            setUpdatedDeliveryAddress(addresses[selectedAddress]);
+            console.log("Selected Address:", addresses[selectedAddress]);
+        }
+    }, [selectedAddress]);
 
     return (
         <div className="container mx-auto p-4 pb-24">
@@ -264,10 +290,20 @@ const BuyNow = () => {
 
                     {/* Address Component */}
                     <Address
-                        name="Ram Kumawat"
-                        details={addressDetails}
-                        onChangeAddress={() => console.log("Change Address clicked")}
-                        onAddAddress={navigateToAddAddress}
+                        name= {updatedDeliveryAddress.name}
+                        details={updatedDeliveryAddress.details}
+                        phone={updatedDeliveryAddress.phone}
+                        onChangeAddress={() => setShowAddressModal(true)}
+                    />
+                    {/* Address Modal */}
+                    <AddressModal
+                        show={showAddressModal}
+                        onClose={() => setShowAddressModal(false)}
+                        addresses={addresses}
+                        selectedAddress={selectedAddress}
+                        setSelectedAddress={setSelectedAddress}
+                        onEdit={handleEditAddress}
+                        onDelete={handleDeleteAddress}
                     />
 
                     {/* Coupons Component */}
