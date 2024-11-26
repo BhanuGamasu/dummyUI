@@ -65,6 +65,7 @@ import { useSelector } from "react-redux"; // Redux hook
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { motion } from 'framer-motion';
 import { MdFilterList } from "react-icons/md";
+import logoImg from "../logoImg.webp"
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -99,13 +100,13 @@ const Header = () => {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       {/* Mobile View */}
-      <div className="lg:hidden px-4 py-3">
+      <div className="lg:hidden px-4 py-4">
         <div className="flex items-center justify-between">
           <button onClick={toggleSidebar} className="text-gray-700">
             <FaBars className="h-6 w-6" />
           </button>
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/75/Giant_Eagle_Logo.svg"
+            src={logoImg}
             alt="Logo"
             className="h-8"
           />
@@ -203,7 +204,7 @@ const Header = () => {
       {/* Desktop View */}
       <div className="hidden lg:flex items-center px-8 py-4">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/7/75/Giant_Eagle_Logo.svg"
+          src={logoImg}
           alt="Logo"
           className="h-10 mr-8"
         />

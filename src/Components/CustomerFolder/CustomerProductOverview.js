@@ -10,6 +10,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/cartSlice';
+import NavigateBack from "../../Components/NavigateBack";
 import {
     Accordion,
     AccordionItem,
@@ -220,7 +221,8 @@ const CustomerProductOverview = () => {
     };
 
     return (
-        <div className="p-6 bg-gradient-to-r from-pink-50 to-yellow-50 rounded-lg shadow-lg">
+        <div className="p-5 bg-gradient-to-r from-pink-50 to-yellow-50 rounded-lg shadow-lg">
+            <NavigateBack />
             <div className="flex flex-col md:flex-row gap-6">
                 {/* Carousel Section */}
                 <div className="carousel w-full md:w-1/2 relative">

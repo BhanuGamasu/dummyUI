@@ -11,14 +11,34 @@ const AddressModal = ({
     setSelectedAddress,
     onEdit,
     onDelete,
+    onDefaultChange, // Callback to sync default address outside
 }) => {
     const navigate = useNavigate();
     const [openOptionsIndex, setOpenOptionsIndex] = React.useState(null);
-    const [defaultAddressIndex, setDefaultAddressIndex] = React.useState(
-        addresses.length === 1 ? 0 : null // Automatically set as default if only one address exists
-    );
+    const [defaultAddressIndex, setDefaultAddressIndex] = React.useState(null);
 
     const menuRef = useRef(null);
+
+    // Load default address from localStorage on mount
+    useEffect(() => {
+        const savedDefaultIndex = localStorage.getItem("defaultAddressIndex");
+        if (savedDefaultIndex !== null && addresses[savedDefaultIndex]) {
+            setDefaultAddressIndex(Number(savedDefaultIndex));
+        } else {
+            // If no saved default and addresses exist, set the first address as default
+            setDefaultAddressIndex(addresses.length > 0 ? 0 : null);
+        }
+    }, [addresses]);
+
+    // Save default address to localStorage whenever it changes
+    useEffect(() => {
+        if (defaultAddressIndex !== null) {
+            localStorage.setItem("defaultAddressIndex", defaultAddressIndex);
+        }
+        if (onDefaultChange) {
+            onDefaultChange(defaultAddressIndex);
+        }
+    }, [defaultAddressIndex, onDefaultChange]);
 
     // Close options menu when clicking outside
     useEffect(() => {
@@ -59,7 +79,6 @@ const AddressModal = ({
                 className="bg-white mb-[73px] rounded-lg rounded-bl-none rounded-br-none shadow-lg w-full md:w-[50%] max-h-[50vh] p-6 overflow-y-auto transform no-scrollbar"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Modal Header */}
                 <div className="flex justify-between">
                     <h2 className="text-lg font-semibold text-gray-800 mb-4">
                         Select Address
@@ -74,7 +93,6 @@ const AddressModal = ({
                     </motion.div>
                 </div>
 
-                {/* Add New Address Button */}
                 <div className="mb-4">
                     <button
                         onClick={() => navigate("/addAddress")}
@@ -84,7 +102,6 @@ const AddressModal = ({
                     </button>
                 </div>
 
-                {/* Address List */}
                 <div className="space-y-4">
                     {addresses.map((address, index) => (
                         <div
@@ -96,11 +113,10 @@ const AddressModal = ({
                             }`}
                             onClick={() => setSelectedAddress(index)}
                         >
-                            {/* Options Menu */}
                             <div className="absolute top-2 right-2">
                                 <button
                                     onClick={(e) => {
-                                        e.stopPropagation(); // Prevent address card click
+                                        e.stopPropagation();
                                         setOpenOptionsIndex(
                                             openOptionsIndex === index ? null : index
                                         );
@@ -143,14 +159,13 @@ const AddressModal = ({
                                                 }}
                                                 className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-green-600"
                                             >
-                                                Default
+                                                Set as Default
                                             </button>
                                         )}
                                     </div>
                                 )}
                             </div>
 
-                            {/* Address Content */}
                             <div className="cursor-pointer">
                                 <h3 className="text-md font-semibold text-gray-800 flex items-center">
                                     {address.name}

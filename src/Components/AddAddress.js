@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { RiUserLocationFill } from "react-icons/ri";
+import NavigateBack from "./NavigateBack"
 
 const AddAddress = ({ addAddressData }) => {
     const [formData, setFormData] = useState({
@@ -38,9 +39,12 @@ const AddAddress = ({ addAddressData }) => {
 
     return (
         <div className="p-6 rounded-lg bg-white w-full">
-            <div className="flex items-center mb-6">
-                <RiUserLocationFill className="text-lg" />
-                <h3 className="text-xl pl-2 font-semibold text-gray-800">Add New Address</h3>
+            <div className="flex items-center justify-between mb-6">
+                <NavigateBack className="mb-0"/>
+                <div className="flex items-center">
+                    <RiUserLocationFill className="text-lg" />
+                    <h3 className="text-xl pl-2 font-semibold text-gray-800">Add New Address</h3>
+                </div>
             </div>
 
             {/* Form Fields with Floating Labels */}

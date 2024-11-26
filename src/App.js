@@ -10,6 +10,8 @@ const CustomerHome = lazy(() => import("./Components/CustomerFolder/CustomerHome
 const CustomerProductOverview = lazy(() => import("./Components/CustomerFolder/CustomerProductOverview"));
 const AddAddress = lazy(() => import("./Components/AddAddress"));
 const AddressModal = lazy(() => import("./Components/AddressModal"));
+const Orders = lazy(() => import("./Components/Orders"));
+const OrderOverview = lazy(() => import("./Components/orderOverview"));
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path="/favourates" element={<Favourates />} />
           <Route path="/addAddress" element={<AddAddress />} />
           <Route path="/addressModal" element={<AddressModal />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/order/:id" element={<OrderOverview />} />
         </Routes>
       </Suspense>
     </div>
