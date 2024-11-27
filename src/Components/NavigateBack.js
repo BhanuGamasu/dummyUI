@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,11 @@ const NavigateBack = ({ label = "Back", className = "" }) => {
     const handleBack = () => {
         navigate(-1); // Navigate to the previous page
     };
+
+    useEffect(() => {
+        // Scroll to the top of the page when the component mounts
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <div className="flex justify-between">

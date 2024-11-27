@@ -177,8 +177,23 @@ const CustomerProductOverview = () => {
     };
 
     const handleAddToCart = () => {
-        dispatch(addToCart(product)); // Add product to Redux cart
-        setIsInCart(true); // Set state to show "Go to Cart"
+        // Create an object with all the required product details
+        const cartItem = {
+            product,          // The full product object
+            quantity,         // Selected quantity
+            selectedWeight,   // Selected weight option
+            originalPrice,    // Price before discount
+            discountPrice,    // Price after discount
+            totalPrice        // Total calculated price
+        };
+    
+        // Dispatch the addToCart action with the cartItem object
+        dispatch(addToCart(cartItem));
+        console.log(cartItem,"cartttttttttttttttttttttt");
+        
+    
+        setIsInCart(true); // Update state to indicate the item is in the cart
+
         // setTimeout(() => {
         //     // Optional: navigate to the cart page after some delay
         //     navigate("/cart");

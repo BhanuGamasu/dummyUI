@@ -3,12 +3,17 @@ import { createSlice } from '@reduxjs/toolkit';
 // Helper function to load data from localStorage
 const loadCartFromLocalStorage = () => {
   const savedCart = localStorage.getItem('cart');
-  return savedCart ? JSON.parse(savedCart) : undefined; // Parse cart from storage or use undefined if empty
+  return savedCart ? JSON.parse(savedCart) : undefined;
 };
 
 // Helper function to save data to localStorage
 const saveCartToLocalStorage = (cart) => {
   localStorage.setItem('cart', JSON.stringify(cart));
+};
+
+// Helper function to calculate cart count
+const calculateCartCount = (items) => {
+  return items.reduce((total, item) => total + item.quantity, 0);
 };
 
 // Load the initial state from localStorage or use the default state
@@ -25,70 +30,102 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const product = action.payload;
-      const existingItem = state.items.find(item => item.id === product.id);
-
+    
+      // Generate a unique identifier for the item based on id and selectedWeight
+      // const uniqueId = `${product.product.id}_${product.selectedWeight}`;
+    
+      // Check if a product with the same id and selectedWeight already exists in the cart
+      const existingItem = state.items.find(
+        (item) => item.id === product.product.id && item.selectedWeight === product.selectedWeight
+      );
+    
       if (existingItem) {
-        existingItem.quantity += 1;
+        // If the product exists, increment the quantity and update the total price
+        existingItem.quantity += product.quantity || 1;
+        existingItem.totalPrice = existingItem.quantity * product.discountPrice;
       } else {
-        state.items.push({ ...product, quantity: 1 });
+        // If the product doesn't exist, add it to the cart
+        state.items.push({
+          ...product,
+          id: product.product.id, // Keep the original id
+          selectedWeight: product.selectedWeight,
+          totalPrice: product.discountPrice * (product.quantity || 1),
+        });
       }
-
-      state.cartCount += 1;
-      state.totalAmount += product.price;
-      state.gst = state.totalAmount * 0.18; // Assuming GST is 18%
-
-      saveCartToLocalStorage(state); // Save updated state to localStorage
+    
+      // Recalculate the total amount and GST
+      state.totalAmount = state.items.reduce((total, item) => total + item.totalPrice, 0);
+      state.gst = state.totalAmount * 0.18;
+      state.cartCount = calculateCartCount(state.items);
+    
+      // Save the updated state to localStorage
+      saveCartToLocalStorage(state);
     },
     incrementQuantity: (state, action) => {
-      const productId = action.payload;
-      const existingItem = state.items.find(item => item.id === productId);
-
+      const { id, selectedWeight } = action.payload;
+      const existingItem = state.items.find(
+        (item) => item.id === id && item.selectedWeight === selectedWeight
+      );
+    
       if (existingItem) {
         existingItem.quantity += 1;
         state.totalAmount += existingItem.price;
         state.gst = state.totalAmount * 0.18;
+        state.cartCount = calculateCartCount(state.items);
       }
-
-      saveCartToLocalStorage(state); // Save updated state to localStorage
+    
+      saveCartToLocalStorage(state);
     },
     decrementQuantity: (state, action) => {
-      const productId = action.payload;
-      const existingItem = state.items.find(item => item.id === productId);
-
+      const { id, selectedWeight } = action.payload;
+      const existingItem = state.items.find(
+        (item) => item.id === id && item.selectedWeight === selectedWeight
+      );
+    
       if (existingItem && existingItem.quantity > 1) {
         existingItem.quantity -= 1;
         state.totalAmount -= existingItem.price;
         state.gst = state.totalAmount * 0.18;
+        state.cartCount = calculateCartCount(state.items);
       }
-
-      saveCartToLocalStorage(state); // Save updated state to localStorage
-    },
+    
+      saveCartToLocalStorage(state);
+    },    
     removeFromCart: (state, action) => {
-      const productId = action.payload;
-      const existingItem = state.items.find(item => item.id === productId);
-
+      const { id, selectedWeight } = action.payload;
+      const existingItem = state.items.find(
+        (item) => item.id === id && item.selectedWeight === selectedWeight
+      );
+    
       if (existingItem) {
         state.totalAmount -= existingItem.price * existingItem.quantity;
-        state.cartCount -= existingItem.quantity;
         state.gst = state.totalAmount * 0.18;
-
-        state.items = state.items.filter(item => item.id !== productId);
+        state.items = state.items.filter(
+          (item) => !(item.id === id && item.selectedWeight === selectedWeight)
+        );
+        state.cartCount = calculateCartCount(state.items);
       }
-
-      saveCartToLocalStorage(state); // Save updated state to localStorage
+    
+      saveCartToLocalStorage(state);
     },
-    // Optional: You could add a resetCart action if needed to clear the cart
+
     resetCart: (state) => {
       state.items = [];
       state.totalAmount = 0;
       state.gst = 0;
       state.cartCount = 0;
-      
-      localStorage.removeItem('cart'); // Clear localStorage when resetting the cart
-    }
+
+      localStorage.removeItem('cart');
+    },
   },
 });
 
-export const { addToCart, incrementQuantity, decrementQuantity, removeFromCart, resetCart } = cartSlice.actions;
+export const {
+  addToCart,
+  incrementQuantity,
+  decrementQuantity,
+  removeFromCart,
+  resetCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
