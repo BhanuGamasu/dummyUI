@@ -148,7 +148,7 @@ const Cart = () => {
                 {items.length === 0 ? (
                     <img
                     src={emptyCartImg}
-                    className="w-full h-full object-cover mb-3"
+                    className="w-full h-full"
                 />
                 ) : (
                     <div>
