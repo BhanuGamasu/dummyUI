@@ -23,6 +23,7 @@ import dataService from "../../dataService";
 
 import img from "../../../src/img.jpg";
 import img2 from "../../../src/img2.jpg";
+import RateProductPopup from "../RateProductPopup";
 
 const CustomerProductOverview = () => {
     const dispatch = useDispatch();
@@ -40,6 +41,8 @@ const CustomerProductOverview = () => {
     const [originalPrice, setOriginalPrice] = useState();
     const [discountPrice, setDiscountPrice] = useState();
     const [isInCart, setIsInCart] = useState(false); // Tracks if the item is in the cart
+
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     useEffect(() => {
         // Scroll to the top of the page when the component mounts
@@ -428,6 +431,7 @@ const CustomerProductOverview = () => {
                             <motion.button
                                 className="mt-4 lg:mt-0 px-6 py-2 bg-gradient-to-r from-pink-500 to-pink-400 text-white font-semibold rounded-full shadow-md hover:scale-105 transition-transform duration-300"
                                 whileHover={{ scale: 1.05 }}
+                                onClick={() => setIsPopupOpen(true)}
                             >
                                 Rate Product
                             </motion.button>
@@ -462,6 +466,11 @@ const CustomerProductOverview = () => {
                                 ))}
                         </div>
                     </div>
+
+                    <RateProductPopup
+                            isOpen={isPopupOpen}
+                            onClose={() => setIsPopupOpen(false)}
+                        />
                 </div>
 
                 <div className="w-full md:w-[48.5%] py-6">

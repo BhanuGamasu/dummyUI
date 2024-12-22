@@ -1,71 +1,13 @@
-// import React from "react";
-// import { AiOutlineArrowLeft, AiOutlineShoppingCart, AiOutlineHeart } from "react-icons/ai";
-// import { useSelector } from "react-redux"; // Redux hook
-// import { useNavigate } from "react-router-dom"; // React Router hook for navigation
-
-// const Header = () => {
-//   const cartCount = useSelector((state) => state.cart.cartCount); // Redux selector for cart count
-//   const navigate = useNavigate(); // Navigation function from React Router
-
-//   return (
-//     <header className="bg-white shadow-md sticky top-0 z-50">
-//       <div className="flex items-center justify-between px-4 py-3">
-//         {/* Back Arrow */}
-//         <button
-//           className="text-gray-600 text-2xl p-2 rounded-full hover:bg-gray-100 transition hover:text-pink-600"
-//           onClick={() => window.history.back()}
-//         >
-//           <AiOutlineArrowLeft />
-//         </button>
-
-//         {/* Search Bar */}
-//         <div className="flex-grow mx-4">
-//           <input
-//             type="text"
-//             placeholder="Search..."
-//             className="w-full py-2 px-4 border rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-300"
-//           />
-//         </div>
-
-//         {/* Favourates Icon */}
-//         <div className="relative mx-2">
-//           <button
-//             className="text-gray-600 text-2xl p-2 rounded-full hover:bg-gray-100 hover:text-red-500 transition"
-//             onClick={() => navigate("/favourates")} // Navigate to wishlist page (optional)
-//           >
-//             <AiOutlineHeart />
-//           </button>
-//         </div>
-
-//         {/* Cart Icon */}
-//         <div className="relative">
-//           <button
-//             className="text-gray-600 text-2xl p-2 rounded-full hover:bg-gray-100 hover:text-pink-600 transition"
-//             onClick={() => navigate("/cart")} // Navigate to cart page
-//           >
-//             <AiOutlineShoppingCart />
-//           </button>
-//           {cartCount > 0 && (
-//             <span className="absolute top-0 right-0 bg-pink-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-//               {cartCount}
-//             </span>
-//           )}
-//         </div>
-//       </div>
-//     </header>
-//   );
-// };
-
-// export default Header;
-
 import React, { useState, useEffect, useRef } from 'react';
-import { FaBars, FaSearch, FaTimes, FaChevronDown } from 'react-icons/fa';
+import { FaBars, FaSearch, FaTimes, FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom"; // React Router hook for navigation
 import { useSelector } from "react-redux"; // Redux hook
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineShoppingCart, AiFillHome } from "react-icons/ai";
 import { motion } from 'framer-motion';
 import { MdFilterList } from "react-icons/md";
-import logoImg from "../logoImg.webp"
+import logoImg from "../logoImg.webp";
+import { BsBoxSeamFill } from "react-icons/bs";
+import { BiSolidCategory } from "react-icons/bi";
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -119,7 +61,7 @@ const Header = () => {
               <AiOutlineShoppingCart />
             </button>
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-white">
+              <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-gray-200">
                 {cartCount}
               </span>
             )}
@@ -131,7 +73,7 @@ const Header = () => {
           initial={{ x: '-100%' }}
           animate={{ x: isSidebarOpen ? '0%' : '-100%' }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="fixed top-0 left-0 h-full bg-white w-64 shadow-md z-50"
+          className="fixed top-0 -left-[1px] h-full bg-white w-64 shadow-md z-50"
           ref={sidebarRef}
         >
           <div className="flex items-center justify-between p-4 border-b">
@@ -144,39 +86,87 @@ const Header = () => {
           {/* Sidebar Content */}
           <div className="p-4 rounded-lg">
             <nav>
-              <ul className="space-y-4">
+              <ul className='space-y-4'>
+                <li>
+                  <button
+                    onClick={() => {
+                      navigate("/home");
+                      setIsSidebarOpen(false);
+                    }}
+                    className="text-gray-800 hover:text-pink-500 font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
+                  >
+                    <AiFillHome
+                      className="transition-transform duration-200 mr-1"
+                    />
+                    Home
+                  </button>
+                </li>
+              </ul>
+
+              <ul className="space-y-4 mt-2">
                 {[
-                  { label: "Categories", items: ["Sub Category 1", "Sub Category 2", "Sub Category 3", "Sub Category 4"] },
-                  { label: "Savings", items: ["Sub Saving 1", "Sub Saving 2", "Sub Saving 3", "Sub Saving 4"] },
-                  { label: "Order Again", items: ["Sub Order 1", "Sub Order 2", "Sub Order 3", "Sub Order 4"] },
+                  {
+                    label: "Categories",
+                    items: ["Sub Category 1", "Sub Category 2", "Sub Category 3", "Sub Category 4"]
+                  },
+                  // { 
+                  //   label: "Savings", 
+                  //   items: ["Sub Saving 1", "Sub Saving 2", "Sub Saving 3", "Sub Saving 4"] 
+                  // },
+                  // { label: "Order Again", items: ["Sub Order 1", "Sub Order 2", "Sub Order 3", "Sub Order 4"] },
                 ].map((menu, index) => (
                   <li key={index}>
-                    <button
-                      onClick={() => handleDropdownToggle(index)}
-                      className="text-gray-800 hover:text-pink-500 flex justify-between items-center w-full font-medium focus:outline-none transition-colors duration-300"
-                    >
-                      {menu.label}
-                      <FaChevronDown
-                        className={`ml-2 transition-transform duration-200 ${activeDropdown === index ? "rotate-180 text-pink-500" : "text-gray-400"
-                          }`}
-                      />
-                    </button>
+                    <div className='flex items-center hover:text-pink-500'>
+                      <BiSolidCategory className='flex, items-center mr-1 hover:text-pink-500' />
+                      <button
+                        onClick={() => handleDropdownToggle(index)} // Toggle dropdown
+                        className="hover:text-pink-500 text-gray-800 flex justify-between items-center w-full font-medium focus:outline-none transition-colors duration-300"
+                      >
+                        {menu.label}
+                        <FaChevronDown
+                          className={`ml-2 transition-transform duration-200 ${activeDropdown === index ? "rotate-180 text-pink-500" : "text-gray-400"
+                            }`}
+                        />
+                      </button>
+                    </div>
                     {activeDropdown === index && (
                       <ul className="mt-2 space-y-1 pl-4 border-l-2 border-gray-200">
                         {menu.items.map((item, idx) => (
                           <li key={idx}>
-                            <a
-                              href="#"
-                              className="block text-gray-700 hover:text-pink-500 hover:font-medium transition-all duration-200"
+                            <button
+                              onClick={() => {
+                                console.log(`Navigating to ${item}`);
+                                setIsSidebarOpen(false); // Close sidebar on sub-item click
+                              }}
+                              className="block text-gray-700 hover:text-pink-500 hover:font-medium transition-all duration-200 text-left w-full"
                             >
                               {item}
-                            </a>
+                            </button>
                           </li>
                         ))}
                       </ul>
                     )}
                   </li>
                 ))}
+              </ul>
+
+              <ul className='space-y-4 mt-2'>
+                <li>
+                  <button
+                    onClick={() => {
+                      navigate("/orders")
+                      setIsSidebarOpen(false);
+                    }
+
+                    }
+                    className="text-gray-800 hover:text-pink-500 font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
+                  >
+                    <BsBoxSeamFill
+                      className="transition-transform duration-200 mr-1"
+                    />
+                    Orders
+                  </button>
+                </li>
               </ul>
             </nav>
           </div>
@@ -208,27 +198,50 @@ const Header = () => {
           alt="Logo"
           className="h-10 mr-8"
         />
-        <nav className="flex space-x-6 mr-6">
+        <nav className="flex space-x-4 mr-4">
+          <div className="relative group">
+            <button
+              onClick={() => navigate("/home")}
+              className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-pink-100 transition duration-300 p-2 px-3"
+            >
+              <AiFillHome
+                className="transition-transform duration-200 mr-1"
+              />
+              Home
+              <FaChevronRight
+                className={`ml-1 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-300`}
+              />
+            </button>
+            {/* Underline Animation */}
+            <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-pink-500 rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
+          </div>
           {[
-            { label: "Categories", items: ["Sub Category 1", "Sub Category 2", "Sub Category 3", "Sub Category 4"] },
-            { label: "Savings", items: ["Sub Saving 1", "Sub Saving 2", "Sub Saving 3", "Sub Saving 4"] },
-            { label: "Order Again", items: ["Sub Order 1", "Sub Order 2", "Sub Order 3", "Sub Order 4"] },
+            {
+              label: "Categories",
+              items: ["Sub Category 1", "Sub Category 2", "Sub Category 3", "Sub Category 4"]
+            },
           ].map((menu, index) => (
             <div className="relative group" key={index}>
+              {/* Parent Button */}
               <button
                 onClick={() => handleDropdownToggle(index)}
                 className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-pink-100 transition duration-300 p-2 px-3"
               >
+                <BiSolidCategory className="flex items-center mr-1 mb-1" />
                 <span className="relative z-10 pb-1">
                   {menu.label}
                 </span>
+                {/* Arrow Icon */}
                 <FaChevronDown
-                  className={`ml-2 transition-transform duration-200 ${activeDropdown === index ? "rotate-180" : ""
+                  className={`ml-1.5 text-gray-700 opacity-0 group-hover:opacity-100 transition-all duration-300 ${activeDropdown === index ? "rotate-180" : ""
                     }`}
                 />
               </button>
+
               {/* Underline Animation */}
               <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-pink-500 rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
+
+              {/* Dropdown Items */}
               {activeDropdown === index && (
                 <ul className="text-center mt-5 absolute bg-white shadow-lg rounded-lg space-y-1 w-52 p-2 z-50 transition-opacity duration-300 opacity-100">
                   {menu.items.map((item, idx) => (
@@ -245,6 +258,22 @@ const Header = () => {
               )}
             </div>
           ))}
+
+
+          <div className="relative group">
+            <button
+              onClick={() => navigate("/orders")}
+              className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-pink-100 transition duration-300 p-2 px-3"
+            >
+              <BsBoxSeamFill className='mr-1' />
+              Orders
+              <FaChevronRight
+                className={`ml-1 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-300`}
+              />
+            </button>
+            {/* Underline Animation */}
+            <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-pink-500 rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
+          </div>
         </nav>
 
 
@@ -280,8 +309,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
-
-
-

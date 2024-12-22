@@ -25,7 +25,7 @@ const BuyNow = () => {
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [updatedDeliveryAddress, setUpdatedDeliveryAddress] = useState('');
     const [isOrderPlacedSuccessfully, setIsOrderPlacedSuccessfully] = useState(false);
-    const [seconds, setSeconds] = useState(5); // Start countdown from 8
+    const [seconds, setSeconds] = useState(3); // Start countdown from 8
     const [isCountdownComplete, setIsCountdownComplete] = useState(false);
 
     const offers = [

@@ -1,12 +1,16 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-const NavigateBack = ({ label = "Back", className = "" }) => {
+const NavigateBack = ({ label = "Back", className = "", target = null }) => {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate(-1); // Navigate to the previous page
+        if (target) {
+            navigate(target); // Navigate to the specified target
+        } else {
+            navigate(-1); // Navigate to the previous page
+        }
     };
 
     useEffect(() => {

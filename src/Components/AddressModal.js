@@ -128,7 +128,7 @@ const AddressModal = ({
                                 {openOptionsIndex === index && (
                                     <div
                                         ref={menuRef}
-                                        className="absolute right-0 bg-white shadow-md rounded-lg text-sm"
+                                        className="absolute right-0 bg-white shadow-md rounded-lg text-sm z-10"
                                     >
                                         <button
                                             onClick={(e) => {
@@ -159,7 +159,7 @@ const AddressModal = ({
                                                 }}
                                                 className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-green-600"
                                             >
-                                                Set as Default
+                                                Default
                                             </button>
                                         )}
                                     </div>
