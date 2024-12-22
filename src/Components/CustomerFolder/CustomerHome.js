@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
-import { FaAngleDoubleRight  } from "react-icons/fa";
+import { FaAngleDoubleRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import dataService from "../../dataService";
 
@@ -24,7 +24,7 @@ const CustomerHome = () => {
         setSpecialProducts(allData.filter((item) => item.type === "specialProduct11"));
         setBestSellingProducts(allData.filter((item) => item.type === "bestSellingProduct"));
         setOccasionPacks(allData.filter((item) => item.type === "occasionPack"));
-    }, []);     
+    }, []);
 
     const navigate = useNavigate();
 
@@ -69,7 +69,7 @@ const CustomerHome = () => {
             <div className="w-full py-6 px-4 bg-gray-100">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-3xl font-semibold text-pink-600">Categories</h2>
-                    <FaAngleDoubleRight  className="text-pink-600 text-2xl" />
+                    <FaAngleDoubleRight className="text-pink-600 text-2xl" />
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 cursor-pointer">
                     {categories.map((category, index) => (
@@ -105,7 +105,7 @@ const CustomerHome = () => {
                 <div className="relative z-20">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-3xl font-semibold text-pink-600">Our Special Products</h2>
-                        <FaAngleDoubleRight  className="text-pink-600 text-2xl" />
+                        <FaAngleDoubleRight className="text-pink-600 text-2xl" />
                     </div>
 
                     {/* Responsive grid layout */}
@@ -121,12 +121,15 @@ const CustomerHome = () => {
                                     className="w-full h-40 sm:h-48 object-cover mb-3" // Adjust height for mobile
                                 />
                                 <h3 className="text-sm sm:text-lg font-semibold">{product.name}</h3>
-                                <p className="text-xs sm:text-sm text-gray-500 line-through">
-                                    &#8377; {product.originalPrice}
-                                </p>
-                                <p className="text-xs sm:text-sm text-pink-600 font-semibold">
-                                    &#8377; {product.discountPrice} <span className="text-gray-400">({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)</span>
-                                </p>
+                                <p className="text-xs sm:text-sm text-gray-600 font-semibold mb-1">250gms</p>
+                                <div className="flex items-center space-x-2">
+                                    <p className="text-xs sm:text-sm text-gray-500 line-through">
+                                        &#8377;{product.originalPrice}
+                                    </p>
+                                    <p className="text-sm sm:text-lg text-pink-600 font-semibold">
+                                        &#8377;{product.discountPrice} <span className="text-gray-400">({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)</span>
+                                    </p>
+                                </div>
                                 <span className="inline-block mt-2 px-3 py-1 bg-green-100 text-green-600 font-semibold rounded-full text-xs sm:text-sm mx-auto">
                                     {product.label}
                                 </span>
@@ -140,7 +143,7 @@ const CustomerHome = () => {
             <div className="w-full py-6 px-4 bg-gray-100">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-3xl font-semibold text-pink-600">Best Selling Products</h2>
-                    <FaAngleDoubleRight  className="text-pink-600 text-2xl" />
+                    <FaAngleDoubleRight className="text-pink-600 text-2xl" />
                 </div>
 
                 {/* Best Selling Products Grid */}
@@ -150,31 +153,25 @@ const CustomerHome = () => {
                             key={index}
                             className="bg-white rounded-lg shadow-md overflow-hidden p-3 transition-transform transform hover:scale-105 cursor-pointer relative"
                         >
-                            {/* Best Seller Sticker */}
-                            {product.label === "Best Seller" && (
-                                <div className="absolute top-0 right-0 bg-pink-600 text-white text-xs sm:text-sm font-bold py-2 px-4 rounded-lg shadow-lg z-20 transform scale-100 group-hover:scale-105 transition-all duration-300 ease-in-out rounded-tl-none rounded-br-none">
-                                    Best Seller
+                            {/* Status Label Reuse */}
+                            {product.label && (
+                                <div>
+                                    <div
+                                        className={`absolute top-4 -left-1 shadow-[4px_0px_6px_rgba(0,0,0,0.3)] rounded-full rounded-l-sm px-4 py-1 text-sm font-semibold text-white ${product.label === "Best Seller"
+                                            ? "bg-pink-600"
+                                            : product.label === "Top Rated"
+                                                ? "bg-blue-600"
+                                                : product.label === "Trending"
+                                                    ? "bg-green-600"
+                                                    : product.label === "Must Buy"
+                                                        ? "bg-red-600"
+                                                        : "bg-gray-500"
+                                            }`}
+                                    >
+                                        {product.label}
+                                    </div>
                                 </div>
                             )}
-
-                            {product.label === "Top Rated" && (
-                                <div className="absolute top-0 right-0 bg-blue-600 text-white text-xs sm:text-sm font-bold py-2 px-4 rounded-lg shadow-lg z-20 transform scale-100 group-hover:scale-105 transition-all duration-300 ease-in-out rounded-tl-none rounded-br-none">
-                                    Top Rated
-                                </div>
-                            )}
-
-                            {product.label === "Trending" && (
-                                <div className="absolute top-0 right-0 bg-green-600 text-white text-xs sm:text-sm font-bold py-2 px-4 rounded-lg shadow-lg z-20 transform scale-100 group-hover:scale-105 transition-all duration-300 ease-in-out rounded-tl-none rounded-br-none">
-                                    Trending
-                                </div>
-                            )}
-
-                            {product.label === "Must Buy" && (
-                                <div className="absolute top-0 right-0 bg-red-600 text-white text-xs sm:text-sm font-bold py-2 px-4 rounded-lg shadow-lg z-20 transform scale-100 group-hover:scale-105 transition-all duration-300 ease-in-out rounded-tl-none rounded-br-none">
-                                    Must Buy
-                                </div>
-                            )}
-
 
                             <img
                                 src={product.imageUrl}
@@ -182,22 +179,23 @@ const CustomerHome = () => {
                                 className="w-full h-40 sm:h-48 object-cover mb-3"
                             />
                             <h3 className="text-sm sm:text-lg font-semibold">{product.name}</h3>
-                            <p className="text-xs sm:text-sm text-gray-500 line-through">
-                                &#8377; {product.originalPrice}
-                            </p>
-                            <p className="text-xs sm:text-sm text-pink-600 font-semibold">
-                                &#8377; {product.discountPrice}{" "}
-                                <span className="text-gray-400">
-                                    ({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)
-                                </span>
-                            </p>
-                            {/* <span className="inline-block mt-2 px-3 py-1 bg-green-100 text-green-600 font-semibold rounded-full text-xs sm:text-sm mx-auto">
-                                {product.label}
-                            </span> */}
+                            <p className="text-xs sm:text-sm text-gray-600 font-semibold mb-1">250gms</p>
+                            <div className="flex items-center space-x-2">
+                                <p className="text-xs sm:text-sm text-gray-500 line-through">
+                                    &#8377;{product.originalPrice}
+                                </p>
+                                <p className="text-sm sm:text-lg text-pink-600 font-semibold">
+                                    &#8377;{product.discountPrice}{" "}
+                                    <span className="text-gray-400">
+                                        ({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     ))}
                 </div>
             </div>
+
 
             {/* Unique Occasion Packs Section */}
             <div className="w-full py-8 px-6 bg-gradient-to-r from-yellow-50 via-yellow-100 to-yellow-50 relative">
@@ -205,7 +203,7 @@ const CustomerHome = () => {
 
                 <div className="flex justify-between items-center mb-8">
                     <h2 className="text-3xl font-semibold text-yellow-700 tracking-wider">Occasion Packs</h2>
-                    <FaAngleDoubleRight  className="text-yellow-700 text-2xl" />
+                    <FaAngleDoubleRight className="text-yellow-700 text-2xl" />
                 </div>
 
                 {/* Occasion Packs Grid */}
@@ -227,14 +225,17 @@ const CustomerHome = () => {
 
                             {/* Product Details */}
                             <h3 className="text-lg font-bold text-gray-700 mb-2">{pack.name}</h3>
+                            <p className="text-sm sm:text-[16px] text-gray-600 font-semibold mb-1">250gms</p>
+                            <div className="flex items-center space-x-2">
                             <div className="text-sm text-gray-500 line-through">
-                                &#8377; {pack.originalPrice}
+                                &#8377;{pack.originalPrice}
                             </div>
                             <div className="text-lg font-semibold text-yellow-600">
-                                &#8377; {pack.discountPrice}{" "}
+                                &#8377;{pack.discountPrice}{" "}
                                 <span className="text-gray-400 text-sm">
                                     ({((pack.originalPrice - pack.discountPrice) / pack.originalPrice * 100).toFixed(0)}% off)
                                 </span>
+                            </div>
                             </div>
 
                             {/* Label with Animation */}

@@ -550,15 +550,18 @@ const CustomerProductOverview = () => {
                                 className="w-full h-40 sm:h-48 object-cover mb-3"
                             />
                             <h3 className="text-sm sm:text-lg font-semibold">{product.name}</h3>
+                            <p className="text-xs sm:text-sm text-gray-600 font-semibold mb-1">250gms</p>
+                            <div className="flex items-center space-x-2">
                             <p className="text-xs sm:text-sm text-gray-500 line-through">
-                                &#8377; {product.originalPrice}
+                                &#8377;{product.originalPrice}
                             </p>
-                            <p className="text-xs sm:text-sm text-pink-600 font-semibold">
-                                &#8377; {product.discountPrice}{" "}
+                            <p className="text-sm sm:text-lg text-pink-600 font-semibold">
+                                &#8377;{product.discountPrice}{" "}
                                 <span className="text-gray-400">
                                     ({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)
                                 </span>
                             </p>
+                            </div>
                             {/* <span className="inline-block mt-2 px-3 py-1 bg-green-100 text-green-600 font-semibold rounded-full text-xs sm:text-sm mx-auto">
                                 {product.label}
                             </span> */}

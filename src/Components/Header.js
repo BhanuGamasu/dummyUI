@@ -168,6 +168,26 @@ const Header = () => {
                   </button>
                 </li>
               </ul>
+
+
+              <ul className='space-y-4 mt-2'>
+                <li>
+                  <button
+                    onClick={() => {
+                      navigate("/about")
+                      setIsSidebarOpen(false);
+                    }
+
+                    }
+                    className="text-gray-800 hover:text-pink-500 font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
+                  >
+                    <BsBoxSeamFill
+                      className="transition-transform duration-200 mr-1"
+                    />
+                    About
+                  </button>
+                </li>
+              </ul>
             </nav>
           </div>
 
@@ -243,12 +263,19 @@ const Header = () => {
 
               {/* Dropdown Items */}
               {activeDropdown === index && (
-                <ul className="text-center mt-5 absolute bg-white shadow-lg rounded-lg space-y-1 w-52 p-2 z-50 transition-opacity duration-300 opacity-100">
+                <ul className="absolute mt-5 bg-white shadow-lg rounded-lg w-max p-4 z-50 transition-opacity duration-300 opacity-100">
                   {menu.items.map((item, idx) => (
-                    <li key={idx}>
+                    <li key={idx} className="flex items-center space-x-3 group mb-2">
+                      {/* Image */}
+                      <img
+                        src={`https://via.placeholder.com/40`}
+                        alt={item}
+                        className="w-12 h-12 rounded-full shadow-md transition-transform duration-200 group-hover:scale-105"
+                      />
+                      {/* Category Name */}
                       <a
                         href="#"
-                        className="block py-2 text-gray-700 hover:text-white hover:bg-pink-300 rounded-lg transition-all duration-200"
+                        className="block text-gray-700 hover:text-white hover:bg-pink-300 py-2 px-3 rounded-lg transition-all duration-200 w-full"
                       >
                         {item}
                       </a>
@@ -267,6 +294,21 @@ const Header = () => {
             >
               <BsBoxSeamFill className='mr-1' />
               Orders
+              <FaChevronRight
+                className={`ml-1 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-300`}
+              />
+            </button>
+            {/* Underline Animation */}
+            <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-pink-500 rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
+          </div>
+
+          <div className="relative group">
+            <button
+              onClick={() => navigate("/about")}
+              className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-pink-100 transition duration-300 p-2 px-3"
+            >
+              <BsBoxSeamFill className='mr-1' />
+              About
               <FaChevronRight
                 className={`ml-1 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-300`}
               />
