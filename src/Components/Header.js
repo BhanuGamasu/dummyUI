@@ -7,7 +7,8 @@ import { motion } from 'framer-motion';
 import { MdFilterList } from "react-icons/md";
 import logoImg from "../logoImg.webp";
 import { BsBoxSeamFill } from "react-icons/bs";
-import { BiSolidCategory } from "react-icons/bi";
+import { TbMessageChatbotFilled } from "react-icons/tb";
+import { BiSolidCategory, BiSolidHome } from "react-icons/bi";
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -54,14 +55,14 @@ const Header = () => {
           />
           <div className="relative">
             <button
-              className="text-gray-700 text-xl p-3 rounded-full shadow-lg hover:bg-pink-100 hover:text-pink-600 transition-transform transform hover:scale-110"
+              className="text-gray-700 text-xl p-3 rounded-full shadow-lg hover:bg-[--primaryShade4] hover:text-black transition-transform transform hover:scale-110"
               onClick={() => navigate("/cart")}
               aria-label="View Cart"
             >
               <AiOutlineShoppingCart />
             </button>
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-gray-200">
+              <span className="absolute -top-1 -right-1 bg-[--primaryShade1] text-white text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-gray-200">
                 {cartCount}
               </span>
             )}
@@ -93,7 +94,7 @@ const Header = () => {
                       navigate("/home");
                       setIsSidebarOpen(false);
                     }}
-                    className="text-gray-800 hover:text-pink-500 font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
+                    className="text-gray-800 hover:text-[--primary] font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
                   >
                     <AiFillHome
                       className="transition-transform duration-200 mr-1"
@@ -116,15 +117,15 @@ const Header = () => {
                   // { label: "Order Again", items: ["Sub Order 1", "Sub Order 2", "Sub Order 3", "Sub Order 4"] },
                 ].map((menu, index) => (
                   <li key={index}>
-                    <div className='flex items-center hover:text-pink-500'>
-                      <BiSolidCategory className='flex, items-center mr-1 hover:text-pink-500' />
+                    <div className='flex items-center hover:text-[--primary]'>
+                      <BiSolidCategory className='flex, items-center mr-1 hover:text-[--primary]' />
                       <button
                         onClick={() => handleDropdownToggle(index)} // Toggle dropdown
-                        className="hover:text-pink-500 text-gray-800 flex justify-between items-center w-full font-medium focus:outline-none transition-colors duration-300"
+                        className="hover:text-[--primary] text-gray-800 flex justify-between items-center w-full font-medium focus:outline-none transition-colors duration-300"
                       >
                         {menu.label}
                         <FaChevronDown
-                          className={`ml-2 transition-transform duration-200 ${activeDropdown === index ? "rotate-180 text-pink-500" : "text-gray-400"
+                          className={`ml-2 transition-transform duration-200 ${activeDropdown === index ? "rotate-180 text-[--primary]" : "text-gray-400"
                             }`}
                         />
                       </button>
@@ -138,7 +139,7 @@ const Header = () => {
                                 console.log(`Navigating to ${item}`);
                                 setIsSidebarOpen(false); // Close sidebar on sub-item click
                               }}
-                              className="block text-gray-700 hover:text-pink-500 hover:font-medium transition-all duration-200 text-left w-full"
+                              className="block text-gray-700 hover:text-[--primary] hover:font-medium transition-all duration-200 text-left w-full"
                             >
                               {item}
                             </button>
@@ -159,7 +160,7 @@ const Header = () => {
                     }
 
                     }
-                    className="text-gray-800 hover:text-pink-500 font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
+                    className="text-gray-800 hover:text-[--primary] font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
                   >
                     <BsBoxSeamFill
                       className="transition-transform duration-200 mr-1"
@@ -179,7 +180,7 @@ const Header = () => {
                     }
 
                     }
-                    className="text-gray-800 hover:text-pink-500 font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
+                    className="text-gray-800 hover:text-[--primary] font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
                   >
                     <BsBoxSeamFill
                       className="transition-transform duration-200 mr-1"
@@ -199,7 +200,7 @@ const Header = () => {
             <input
               type="text"
               placeholder="Search products"
-              className="border border-gray-300 rounded-full py-2 pl-10 pr-4 w-full text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="border border-gray-300 rounded-full py-2 pl-10 pr-4 w-full text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[--primaryShade3] focus:border-[--primaryShade3] shadow-sm hover:shadow-md transition-shadow duration-300"
             />
             <div className="absolute top-1/2 left-4 transform -translate-y-1/2 text-gray-400">
               <FaSearch className="w-5 h-5" />
@@ -222,18 +223,18 @@ const Header = () => {
           <div className="relative group">
             <button
               onClick={() => navigate("/home")}
-              className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-pink-100 transition duration-300 p-2 px-3"
+              className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-[--primaryShade4] transition duration-300 p-2 px-3"
             >
-              <AiFillHome
-                className="transition-transform duration-200 mr-1"
+              <BiSolidHome
+                className="transition-transform duration-200 mr-1 h-5 w-5"
               />
               Home
-              <FaChevronRight
+              {/* <FaChevronRight
                 className={`ml-1 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-300`}
-              />
+              /> */}
             </button>
             {/* Underline Animation */}
-            <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-pink-500 rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
+            <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-[--primary] rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
           </div>
           {[
             {
@@ -245,9 +246,9 @@ const Header = () => {
               {/* Parent Button */}
               <button
                 onClick={() => handleDropdownToggle(index)}
-                className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-pink-100 transition duration-300 p-2 px-3"
+                className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-[--primaryShade4] transition duration-300 p-2 px-3"
               >
-                <BiSolidCategory className="flex items-center mr-1 mb-1" />
+                <BiSolidCategory className="flex items-center mr-1 mb-1 h-5 w-5" />
                 <span className="relative z-10 pb-1">
                   {menu.label}
                 </span>
@@ -259,7 +260,7 @@ const Header = () => {
               </button>
 
               {/* Underline Animation */}
-              <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-pink-500 rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
+              <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-[--primary] rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
 
               {/* Dropdown Items */}
               {activeDropdown === index && (
@@ -275,7 +276,7 @@ const Header = () => {
                       {/* Category Name */}
                       <a
                         href="#"
-                        className="block text-gray-700 hover:text-white hover:bg-pink-300 py-2 px-3 rounded-lg transition-all duration-200 w-full"
+                        className="block text-gray-700 hover:text-white hover:bg-[--primaryShade1] py-2 px-3 rounded-lg transition-all duration-200 w-full"
                       >
                         {item}
                       </a>
@@ -290,31 +291,31 @@ const Header = () => {
           <div className="relative group">
             <button
               onClick={() => navigate("/orders")}
-              className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-pink-100 transition duration-300 p-2 px-3"
+              className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-[--primaryShade4] transition duration-300 p-2 px-3"
             >
-              <BsBoxSeamFill className='mr-1' />
+              <BsBoxSeamFill className='mr-1 h-[1.10rem] w-[1.10rem]' />
               Orders
               <FaChevronRight
                 className={`ml-1 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-300`}
               />
             </button>
             {/* Underline Animation */}
-            <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-pink-500 rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
+            <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-[--primary] rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
           </div>
 
           <div className="relative group">
             <button
               onClick={() => navigate("/about")}
-              className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-pink-100 transition duration-300 p-2 px-3"
+              className="my-2 text-gray-700 hover:text-gray-900 flex items-center font-medium focus:outline-none relative rounded-full group-hover:bg-[--primaryShade4] transition duration-300 p-2 px-3"
             >
-              <BsBoxSeamFill className='mr-1' />
-              About
-              <FaChevronRight
+              <TbMessageChatbotFilled className='mr-1 h-5 w-5' />
+              About Us
+              {/* <FaChevronRight
                 className={`ml-1 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-300`}
-              />
+              /> */}
             </button>
             {/* Underline Animation */}
-            <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-pink-500 rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
+            <span className="absolute bottom-0 left-1/2 w-0 h-[2.5px] bg-[--primary] rounded-full group-hover:w-1/4 transition-all duration-300 transform -translate-x-1/2"></span>
           </div>
         </nav>
 
@@ -323,7 +324,7 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search products"
-            className="border border-gray-300 rounded-full py-2 pl-[3rem] pr-4 w-full text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 shadow-sm hover:shadow-md transition-shadow duration-300"
+            className="border border-gray-300 rounded-full py-2 pl-[3rem] pr-4 w-full text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[--primaryShade3] focus:border-[--primaryShade3] shadow-sm hover:shadow-md transition-shadow duration-300"
           />
           <div className="absolute top-1/2 left-4 transform -translate-y-1/2 text-gray-400">
             <FaSearch className="w-5 h-5" />
@@ -332,14 +333,14 @@ const Header = () => {
 
         <div className="relative">
           <button
-            className="text-gray-700 text-xl p-3 rounded-full shadow-lg hover:bg-pink-100 hover:text-pink-600 transition-transform transform hover:scale-110"
+            className="text-gray-700 text-xl p-3 rounded-full shadow-lg hover:bg-[--primaryShade4] hover:text-black transition-transform transform hover:scale-110"
             onClick={() => navigate("/cart")}
             aria-label="View Cart"
           >
             <AiOutlineShoppingCart />
           </button>
           {cartCount > 0 && (
-            <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-white">
+            <span className="absolute -top-1 -right-1 bg-[--primary] text-gray-700 text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-white">
               {cartCount}
             </span>
           )}

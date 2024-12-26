@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { FaStar, FaStarHalfAlt, FaChevronDown, FaShoppingCart, FaShareAlt } from "react-icons/fa";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { IoClose } from "react-icons/io5";
 import { motion } from "framer-motion";
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/cartSlice';
@@ -41,8 +42,68 @@ const CustomerProductOverview = () => {
     const [originalPrice, setOriginalPrice] = useState();
     const [discountPrice, setDiscountPrice] = useState();
     const [isInCart, setIsInCart] = useState(false); // Tracks if the item is in the cart
-
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const [selectedReview, setSelectedReview] = useState(null);
+    const [isFullReviewVisible, setIsFullReviewVisible] = useState(false);
+    const [isOverflowing, setIsOverflowing] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const reviewRef = useRef(null);
+
+    const reviews = [
+        {
+            id: 1,
+            user: "Alice",
+            rating: 5,
+            comment: "Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.",
+            images: [img2, img, img2, img]
+        },
+        {
+            id: 2,
+            user: "Bob",
+            rating: 4,
+            comment: "Good quality but delivery was late.",
+            images: [img2, img]
+        },
+        {
+            id: 3,
+            user: "Charlie",
+            rating: 3,
+            comment: "Average, expected better.",
+            images: [img2, img]
+        },
+        {
+            id: 4,
+            user: "Diana",
+            rating: 5,
+            comment: "Perfect! Exceeded my expectations.",
+            images: [img2, img]
+        },
+        {
+            id: 5,
+            user: "Eve",
+            rating: 4,
+            comment: "Good value for money.",
+            images: [img2, img]
+        },
+        {
+            id: 6,
+            user: "Frank",
+            rating: 2,
+            comment: "Not satisfied with the quality.",
+            images: [img2, img]
+        },
+    ];
+
+    // Detect if the review text is overflowing
+    useEffect(() => {
+        if (selectedReview && reviewRef.current) {
+            const isTextOverflowing =
+                reviewRef.current.scrollHeight > reviewRef.current.clientHeight;
+            setIsOverflowing(isTextOverflowing);
+        }
+    }, [selectedReview, isFullReviewVisible]);
+
 
     useEffect(() => {
         // Scroll to the top of the page when the component mounts
@@ -170,6 +231,18 @@ const CustomerProductOverview = () => {
         },
     ];
 
+    // Function to open the modal with the selected review
+    const openReviewModal = (review) => {
+        setSelectedReview(review);
+        setIsFullReviewVisible(false); // Reset the full review visibility
+    };
+
+    // Function to close the modal
+    const closeReviewModal = () => {
+        setSelectedReview(null);
+        setIsFullReviewVisible(false);
+    };
+
     const incrementQuantity = () => setQuantity(quantity + 1);
     const decrementQuantity = () => {
         if (quantity > 1) setQuantity(quantity - 1);
@@ -189,12 +262,12 @@ const CustomerProductOverview = () => {
             discountPrice,    // Price after discount
             totalPrice        // Total calculated price
         };
-    
+
         // Dispatch the addToCart action with the cartItem object
         dispatch(addToCart(cartItem));
-        console.log(cartItem,"cartttttttttttttttttttttt");
-        
-    
+        console.log(cartItem, "cartttttttttttttttttttttt");
+
+
         setIsInCart(true); // Update state to indicate the item is in the cart
 
         // setTimeout(() => {
@@ -468,9 +541,9 @@ const CustomerProductOverview = () => {
                     </div>
 
                     <RateProductPopup
-                            isOpen={isPopupOpen}
-                            onClose={() => setIsPopupOpen(false)}
-                        />
+                        isOpen={isPopupOpen}
+                        onClose={() => setIsPopupOpen(false)}
+                    />
                 </div>
 
                 <div className="w-full md:w-[48.5%] py-6">
@@ -532,6 +605,137 @@ const CustomerProductOverview = () => {
 
 
 
+            {/* Reviews section */}
+            <div className="bg-white p-4 rounded-xl shadow-md mb-6">
+                <h2 className="text-xl font-bold mb-4">Customer Reviews</h2>
+                <div className="flex space-x-4 overflow-x-scroll no-scrollbar cursor-pointer">
+                    {reviews.slice(0, 5).map((review) => (
+                        <div
+                            key={review.id}
+                            onClick={() => openReviewModal(review)}
+                            className="min-w-[200px] max-w-[200px] bg-gray-100 p-3 rounded-lg shadow-md"
+                        >
+                            <img
+                                src={review.images[0]}
+                                alt={`${review.user}'s review`}
+                                className="w-full h-32 object-cover rounded-md mb-4"
+                            />
+                            <p className="font-semibold mb-1">{review.user}</p>
+                            <p className="text-yellow-500 mb-1">
+                                {"⭐".repeat(review.rating)}
+                            </p>
+                            <p className="text-gray-700 line-clamp-2">{review.comment}</p>
+                            {review.comment.length > 100 && (
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={() => openReviewModal(review)}
+                                        className="text-blue-500 hover:underline"
+                                    >
+                                        More
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                    <button
+                        onClick={() => navigate("/allReviews")}
+                        className="min-w-[200px] flex items-center justify-center bg-blue-500 text-white rounded-lg shadow-md p-4 hover:bg-blue-600 transition"
+                    >
+                        Show All Reviews
+                    </button>
+                </div>
+            </div>
+
+            {/* Modal for full image and review */}
+            {selectedReview && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+                    onClick={closeReviewModal}
+                >
+                    <div
+                        className="relative bg-white rounded-lg shadow-2xl w-full max-w-lg max-h-[100%] mx-5 md:mx-0 overflow-hidden"
+                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+                    >
+                        {/* Close Button */}
+                        <button
+                            onClick={closeReviewModal}
+                            className="absolute top-2 right-2 z-10 bg-white text-red-500 border-2 border-red-500 p-1 rounded-full shadow-lg hover:bg-red-500 hover:text-white transition duration-300 ease-in-out"
+                        >
+                            <IoClose />
+                        </button>
+
+                        {/* Image Section */}
+                        <div className="relative w-full bg-gray-100 rounded-t-lg overflow-hidden">
+                            {/* Large Image */}
+                            <img
+                                src={selectedImage || selectedReview.images[0]}
+                                alt="Selected"
+                                className="w-full max-h-72 object-contain"
+                            />
+                        </div>
+
+                        {/* Thumbnail Section */}
+                        <div className="flex justify-center gap-2 mt-2 p-4">
+                            {selectedReview.images.map((img, idx) => (
+                                <img
+                                    key={idx}
+                                    src={img}
+                                    alt={`Thumbnail ${idx + 1}`}
+                                    className={`w-16 h-16 object-cover rounded cursor-pointer border-[3px] ${(selectedImage || selectedReview.images[0]) === img
+                                        ? "border-pink-500"
+                                        : "border-transparent"
+                                        }`}
+                                    onClick={() => setSelectedImage(img)}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Review Content */}
+                        <div className="p-6 flex flex-col gap-4 overflow-auto max-h-[calc(80%-320px)]">
+                            {/* User and Rating */}
+                            <div className="flex items-center justify-between">
+                                <p className="font-semibold text-lg text-gray-800">
+                                    {selectedReview.user}
+                                </p>
+                                <p className="text-yellow-500 text-base">
+                                    {"⭐".repeat(selectedReview.rating)}
+                                </p>
+                            </div>
+
+                            {/* Scrollable Review Text */}
+                            <div className="relative">
+                                <div
+                                    ref={reviewRef}
+                                    className={`text-gray-700 text-sm leading-relaxed overflow-auto max-h-[200px] no-scrollbar ${isFullReviewVisible ? "" : "line-clamp-3"
+                                        }`}
+                                >
+                                    {selectedReview.comment}
+                                </div>
+                                {/* Show More/Less Button */}
+                                {(isOverflowing || isFullReviewVisible) && (
+                                    <button
+                                        onClick={() => setIsFullReviewVisible(!isFullReviewVisible)}
+                                        className="absolute bottom-[-20px] right-0 text-blue-500 hover:underline focus:outline-none mt-2"
+                                    >
+                                        {isFullReviewVisible ? "Show Less" : "More"}
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
+
+
+
+
+
+
+
+
+
 
             {/* Similar Products Section */}
             <div className="w-full">
@@ -552,15 +756,15 @@ const CustomerProductOverview = () => {
                             <h3 className="text-sm sm:text-lg font-semibold">{product.name}</h3>
                             <p className="text-xs sm:text-sm text-gray-600 font-semibold mb-1">250gms</p>
                             <div className="flex items-center space-x-2">
-                            <p className="text-xs sm:text-sm text-gray-500 line-through">
-                                &#8377;{product.originalPrice}
-                            </p>
-                            <p className="text-sm sm:text-lg text-pink-600 font-semibold">
-                                &#8377;{product.discountPrice}{" "}
-                                <span className="text-gray-400">
-                                    ({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)
-                                </span>
-                            </p>
+                                <p className="text-xs sm:text-sm text-gray-500 line-through">
+                                    &#8377;{product.originalPrice}
+                                </p>
+                                <p className="text-sm sm:text-lg text-pink-600 font-semibold">
+                                    &#8377;{product.discountPrice}{" "}
+                                    <span className="text-gray-400">
+                                        ({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)
+                                    </span>
+                                </p>
                             </div>
                             {/* <span className="inline-block mt-2 px-3 py-1 bg-green-100 text-green-600 font-semibold rounded-full text-xs sm:text-sm mx-auto">
                                 {product.label}
