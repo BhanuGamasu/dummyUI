@@ -25,6 +25,7 @@ import dataService from "../../dataService";
 import img from "../../../src/img.jpg";
 import img2 from "../../../src/img2.jpg";
 import RateProductPopup from "../RateProductPopup";
+import SnackBar from "../SnackBar";
 
 const CustomerProductOverview = () => {
     const dispatch = useDispatch();
@@ -43,6 +44,8 @@ const CustomerProductOverview = () => {
     const [discountPrice, setDiscountPrice] = useState();
     const [isInCart, setIsInCart] = useState(false); // Tracks if the item is in the cart
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isSnackBarVisible, setIsSnackBarVisible] = useState(false);
+    const [snackBarMessage, setSnackBarMessage] = useState("");
 
     const [selectedReview, setSelectedReview] = useState(null);
     const [isFullReviewVisible, setIsFullReviewVisible] = useState(false);
@@ -55,42 +58,21 @@ const CustomerProductOverview = () => {
             id: 1,
             user: "Alice",
             rating: 5,
-            comment: "Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.",
+            comment: "Amazing product! Highly recommend product!",
             images: [img2, img, img2, img]
         },
         {
             id: 2,
             user: "Bob",
             rating: 4,
-            comment: "Good quality but delivery was late.",
+            comment: "Good quality Amazing product but delivery was late.",
             images: [img2, img]
         },
         {
             id: 3,
-            user: "Charlie",
-            rating: 3,
-            comment: "Average, expected better.",
-            images: [img2, img]
-        },
-        {
-            id: 4,
-            user: "Diana",
-            rating: 5,
-            comment: "Perfect! Exceeded my expectations.",
-            images: [img2, img]
-        },
-        {
-            id: 5,
-            user: "Eve",
-            rating: 4,
-            comment: "Good value for money.",
-            images: [img2, img]
-        },
-        {
-            id: 6,
             user: "Frank",
             rating: 2,
-            comment: "Not satisfied with the quality.",
+            comment: "Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.Amazing product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend product! Highly recommend.",
             images: [img2, img]
         },
     ];
@@ -265,6 +247,8 @@ const CustomerProductOverview = () => {
 
         // Dispatch the addToCart action with the cartItem object
         dispatch(addToCart(cartItem));
+        setSnackBarMessage("Added to Cart!");
+        setIsSnackBarVisible(true);
         console.log(cartItem, "cartttttttttttttttttttttt");
 
 
@@ -312,7 +296,7 @@ const CustomerProductOverview = () => {
     };
 
     return (
-        <div className="p-5 bg-gradient-to-r from-pink-50 to-yellow-50 rounded-lg shadow-lg">
+        <div className="p-5 bg-gradient-to-r from-[--primaryShade4] to-gray-50 rounded-lg shadow-lg">
             <NavigateBack />
             <div className="flex flex-col md:flex-row gap-6">
                 {/* Carousel Section */}
@@ -347,7 +331,7 @@ const CustomerProductOverview = () => {
                     <p className="text-lg sm:text-2xl text-gray-500 line-through">
                         &#8377; {originalPrice}
                     </p>
-                    <p className="text-lg sm:text-2xl text-pink-600 font-semibold mb-3">
+                    <p className="text-lg sm:text-2xl text-[--primaryDarkShade1] font-semibold mb-3">
                         &#8377; {discountPrice}{" "}
                         <span className="text-gray-400">
                             ({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)
@@ -367,8 +351,8 @@ const CustomerProductOverview = () => {
                                 key={weightOption}
                                 onClick={() => handleWeightSelect(weightOption)}
                                 className={`px-6 py-2 rounded-3xl text-lg font-semibold transition-all duration-200 ease-in-out focus:outline-none ${selectedWeight === weightOption
-                                    ? "bg-pink-500 text-white"
-                                    : "bg-gray-200 text-gray-800 hover:bg-pink-100"
+                                    ? "bg-gradient-to-r from-[--primaryDarkShade1] to-[--primary] text-white"
+                                    : "bg-gray-200 text-gray-800 hover:bg-[--primaryShade4]"
                                     }`}
                             >
                                 {weightOption}
@@ -434,31 +418,31 @@ const CustomerProductOverview = () => {
                         </motion.button>
 
                         <motion.button
-                            onClick={isInCart ? () => navigate("/cart") : handleAddToCart}
-                            className={`px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg flex items-center justify-center gap-2 transition-all duration-300 ${isInCart ? "bg-green-500 text-white" : "hover:bg-gray-100"
-                                }`}
+                            onClick={handleAddToCart}
+                            className="px-6 py-3 border border-gray-400 text-gray-700 font-semibold rounded-lg flex items-center justify-center gap-2 hover:scale-105 transition-transform"
                             whileTap={{ scale: 0.95 }} // Animation on click
-                            animate={{
-                                backgroundColor: isInCart ? "#22c55e" : "#fff", // Animate color
-                                color: isInCart ? "#fff" : "#374151", // Animate text color
-                                scale: isInCart ? 1.1 : 1, // Slightly enlarge when in cart
-                            }}
+                        // animate={{
+                        //     backgroundColor: isInCart ? "#22c55e" : "#fff", // Animate color
+                        //     color: isInCart ? "#fff" : "#374151", // Animate text color
+                        //     scale: isInCart ? 1.1 : 1, // Slightly enlarge when in cart
+                        // }}
                         >
                             <FaShoppingCart className="text-lg" />
-                            <span>{isInCart ? "Go to Cart" : "Add to Cart"}</span>
+                            {/* <span>{isInCart ? "Go to Cart" : "Add to Cart"}</span> */}
+                            <span>Add to Cart</span>
                         </motion.button>
 
                         {/* Buy Now with Pink Background */}
                         <button
                             onClick={handleSubmit}
-                            className="px-6 py-3 bg-pink-500 text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-transform"
+                            className="px-6 py-3 bg-gradient-to-r from-[--primaryDarkShade1] to-[--primaryDarkShade1] text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-transform"
                         >
                             Buy Now
                         </button>
                     </div>
 
                     {/* Return and Manufacturer Details Card */}
-                    <div className="p-4 border rounded-lg shadow-md bg-gray-100">
+                    <div className="p-4 border rounded-lg shadow-md bg-gray-50">
                         <h3 className="font-semibold mb-2 text-gray-800">Shipping Details</h3>
                         <p className="text-gray-600">
                             Free shipping all over India
@@ -476,8 +460,8 @@ const CustomerProductOverview = () => {
 
                 {/* Ratings and Reviews Card */}
                 <div className="w-full md:w-[50%] md:pb-4 pt-4 relative">
-                    <h3 className="font-semibold mb-2 text-gray-800">Ratings & Reviews</h3>
-                    <div className="bg-white p-4 rounded-lg shadow-md border border-gray-100">
+                    {/* <h3 className="font-semibold mb-2 text-gray-800">Ratings & Reviews</h3> */}
+                    <div className="bg-white p-7 rounded-lg shadow-md border border-gray-100">
                         {/* Ratings Content */}
                         <motion.div
                             className="flex flex-col lg:flex-row items-center mb-8"
@@ -502,7 +486,7 @@ const CustomerProductOverview = () => {
                                 </p>
                             </div>
                             <motion.button
-                                className="mt-4 lg:mt-0 px-6 py-2 bg-gradient-to-r from-pink-500 to-pink-400 text-white font-semibold rounded-full shadow-md hover:scale-105 transition-transform duration-300"
+                                className="mt-4 lg:mt-0 px-6 py-2 bg-gradient-to-r from-[--primaryDarkShade1] to-[--primary] text-white font-semibold rounded-full shadow-md hover:scale-105 transition-transform duration-300"
                                 whileHover={{ scale: 1.05 }}
                                 onClick={() => setIsPopupOpen(true)}
                             >
@@ -551,7 +535,7 @@ const CustomerProductOverview = () => {
                     <Accordion allowZeroExpanded className="space-y-3">
                         <AccordionItem>
                             <AccordionItemHeading>
-                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition font-medium rounded-bl-none rounded-br-none">
+                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-200 rounded-lg hover:bg-gray-300 transition font-medium rounded-bl-none rounded-br-none">
                                     Materials <FaChevronDown className="text-gray-600" />
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -561,7 +545,7 @@ const CustomerProductOverview = () => {
                         </AccordionItem>
                         <AccordionItem>
                             <AccordionItemHeading>
-                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition font-medium rounded-bl-none rounded-br-none">
+                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-200 rounded-lg hover:bg-gray-300 transition font-medium rounded-bl-none rounded-br-none">
                                     Instructions <FaChevronDown className="text-gray-600" />
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -571,7 +555,7 @@ const CustomerProductOverview = () => {
                         </AccordionItem>
                         <AccordionItem>
                             <AccordionItemHeading>
-                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition font-medium rounded-bl-none rounded-br-none">
+                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-200 rounded-lg hover:bg-gray-300 transition font-medium rounded-bl-none rounded-br-none">
                                     Full Details <FaChevronDown className="text-gray-600" />
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -581,7 +565,7 @@ const CustomerProductOverview = () => {
                         </AccordionItem>
                         <AccordionItem>
                             <AccordionItemHeading>
-                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition font-medium rounded-bl-none rounded-br-none">
+                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-200 rounded-lg hover:bg-gray-300 transition font-medium rounded-bl-none rounded-br-none">
                                     Ingrediants <FaChevronDown className="text-gray-600" />
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -591,7 +575,7 @@ const CustomerProductOverview = () => {
                         </AccordionItem>
                         <AccordionItem>
                             <AccordionItemHeading>
-                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition font-medium rounded-bl-none rounded-br-none">
+                                <AccordionItemButton className="flex justify-between items-center p-3 bg-gray-200 rounded-lg hover:bg-gray-300 transition font-medium rounded-bl-none rounded-br-none">
                                     Uses <FaChevronDown className="text-gray-600" />
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -605,46 +589,61 @@ const CustomerProductOverview = () => {
 
 
 
-            {/* Reviews section */}
-            <div className="bg-white p-4 rounded-xl shadow-md mb-6">
-                <h2 className="text-xl font-bold mb-4">Customer Reviews</h2>
-                <div className="flex space-x-4 overflow-x-scroll no-scrollbar cursor-pointer">
-                    {reviews.slice(0, 5).map((review) => (
+            {/* Redesigned Reviews Section */}
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-5 rounded-2xl shadow-lg mb-8">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Customer Reviews</h2>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {reviews.slice(0, 6).map((review) => (
                         <div
                             key={review.id}
                             onClick={() => openReviewModal(review)}
-                            className="min-w-[200px] max-w-[200px] bg-gray-100 p-3 rounded-lg shadow-md"
+                            className="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-start gap-4 cursor-pointer"
                         >
+                            {/* User Image */}
                             <img
                                 src={review.images[0]}
                                 alt={`${review.user}'s review`}
-                                className="w-full h-32 object-cover rounded-md mb-4"
+                                className="w-24 h-24 rounded-full border-2 border-[--primary] object-cover"
                             />
-                            <p className="font-semibold mb-1">{review.user}</p>
-                            <p className="text-yellow-500 mb-1">
-                                {"⭐".repeat(review.rating)}
-                            </p>
-                            <p className="text-gray-700 line-clamp-2">{review.comment}</p>
-                            {review.comment.length > 100 && (
-                                <div className="flex justify-end">
-                                    <button
-                                        onClick={() => openReviewModal(review)}
-                                        className="text-blue-500 hover:underline"
-                                    >
-                                        More
-                                    </button>
-                                </div>
-                            )}
+
+                            {/* Review Content */}
+                            <div className="flex-1">
+                                <h3 className="font-semibold text-lg text-gray-800">{review.user}</h3>
+                                <p className="text-yellow-500 text-sm">
+                                    {"⭐".repeat(review.rating)}{" "}
+                                    <span className="text-gray-400">
+                                        {"☆".repeat(5 - review.rating)}
+                                    </span>
+                                </p>
+                                <p className="text-gray-600 mt-2 line-clamp-2">{review.comment}</p>
+                                {review.comment.length > 100 && (
+                                    <div className="flex justify-end mt-2">
+                                        <button
+                                            onClick={() => openReviewModal(review)}
+                                            className="text-blue-500 text-sm font-medium hover:underline"
+                                        >
+                                            Read More
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Show All Reviews Button */}
+                <div className="flex justify-center mt-6">
                     <button
                         onClick={() => navigate("/allReviews")}
-                        className="min-w-[200px] flex items-center justify-center bg-blue-500 text-white rounded-lg shadow-md p-4 hover:bg-blue-600 transition"
+                        className="px-6 py-2 bg-gradient-to-r from-[--primary] to-[--primaryShade1] text-white font-semibold rounded-full shadow-md 
+                                transform transition duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-lg"
                     >
                         Show All Reviews
                     </button>
                 </div>
             </div>
+
+
 
             {/* Modal for full image and review */}
             {selectedReview && (
@@ -682,7 +681,7 @@ const CustomerProductOverview = () => {
                                     src={img}
                                     alt={`Thumbnail ${idx + 1}`}
                                     className={`w-16 h-16 object-cover rounded cursor-pointer border-[3px] ${(selectedImage || selectedReview.images[0]) === img
-                                        ? "border-pink-500"
+                                        ? "border-[--primary]"
                                         : "border-transparent"
                                         }`}
                                     onClick={() => setSelectedImage(img)}
@@ -726,20 +725,9 @@ const CustomerProductOverview = () => {
                 </div>
             )}
 
-
-
-
-
-
-
-
-
-
-
-
             {/* Similar Products Section */}
             <div className="w-full">
-                <h2 className="text-3xl font-semibold text-pink-600 mb-4">Similar Products</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Similar Products</h2>
 
                 {/* Similar Products Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -759,7 +747,7 @@ const CustomerProductOverview = () => {
                                 <p className="text-xs sm:text-sm text-gray-500 line-through">
                                     &#8377;{product.originalPrice}
                                 </p>
-                                <p className="text-sm sm:text-lg text-pink-600 font-semibold">
+                                <p className="text-sm sm:text-lg text-[--primaryDarkShade1] font-semibold">
                                     &#8377;{product.discountPrice}{" "}
                                     <span className="text-gray-400">
                                         ({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)
@@ -774,13 +762,20 @@ const CustomerProductOverview = () => {
                 </div>
                 <div className="flex justify-center mt-5">
                     <button
-                        className="px-6 py-2 bg-gradient-to-r from-green-400 to-blue-400 text-white font-semibold rounded-full shadow-md 
+                        className="px-6 py-2 bg-gradient-to-r from-[--primary] to-[--primaryShade1] text-white font-semibold rounded-full shadow-md 
                                 transform transition duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-lg"
                     >
                         Show more
                     </button>
                 </div>
             </div>
+
+            {/* SnackBar */}
+            <SnackBar
+                message={snackBarMessage}
+                isVisible={isSnackBarVisible}
+                onClose={() => setIsSnackBarVisible(false)}
+            />
         </div>
     );
 };

@@ -7,6 +7,16 @@ module.exports = {
       scale: {
         80: "0.80",
       },
+      animation: {
+        'light-slide': 'light-slide 2s linear infinite',
+      },
+      keyframes: {
+        'light-slide': {
+          '0%': { transform: 'translateX(-100%)' },
+          '50%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(100%)' },
+        }
+      },
     },
   },
   plugins: [

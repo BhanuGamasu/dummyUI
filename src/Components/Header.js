@@ -340,7 +340,7 @@ const Header = () => {
             <AiOutlineShoppingCart />
           </button>
           {cartCount > 0 && (
-            <span className="absolute -top-1 -right-1 bg-[--primary] text-gray-700 text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-white">
+            <span className="absolute -top-1 -right-1 bg-[--primary] text-white text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-white">
               {cartCount}
             </span>
           )}

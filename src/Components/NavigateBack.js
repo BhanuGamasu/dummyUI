@@ -20,7 +20,7 @@ const NavigateBack = ({ label = "Back", className = "", target = null }) => {
 
     return (
         <div className="flex justify-between">
-            <div className={`flex items-center mb-4 cursor-pointer ${className}`} onClick={handleBack}>
+            <div className={`flex items-center hover:-translate-x-1 duration-300 mb-4 cursor-pointer ${className}`} onClick={handleBack}>
                 <IoIosArrowBack className="text-2xl mr-1" />
                 <h1 className="text-xl font-semibold">{label}</h1>
             </div>

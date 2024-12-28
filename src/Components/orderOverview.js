@@ -112,7 +112,7 @@ const OrderOverview = () => {
                 <div className="flex justify-between items-center mb-4">
                     {/* <div className="flex items-center space-x-3"> */}
                     <div className="flex items-center space-x-3 ">
-                        <BsBoxSeam className="text-2xl text-blue-500" />
+                        <BsBoxSeam className="text-2xl text-[--primaryDarkShade1]" />
                         <h2 className="text-lg font-bold">Order Details</h2>
                     </div>
                     <p className="text-gray-700">
@@ -135,7 +135,7 @@ const OrderOverview = () => {
             {/* Vertical Status Bar */}
             <div className="bg-white p-6 rounded-lg shadow-md mb-6">
             <div className="flex items-center space-x-3 mb-3">
-                    <RiTruckLine className="text-2xl text-blue-500" />
+                    <RiTruckLine className="text-2xl text-[--primaryDarkShade1]" />
                     <h2 className="text-lg font-bold">Order Status</h2>
                 </div>
                 <div className="relative">
@@ -207,7 +207,7 @@ const OrderOverview = () => {
                 className="bg-white border shadow-md p-5 rounded-xl transition-shadow duration-300 mb-6"
             >
                 <div className="flex items-center space-x-3 mb-3">
-                    <AiOutlineShoppingCart className="text-2xl text-blue-500" />
+                    <AiOutlineShoppingCart className="text-2xl text-[--primaryDarkShade1]" />
                     <h2 className="text-lg font-bold">Order Items</h2>
                 </div>
                 {order.items.map((item, index) => (
@@ -243,7 +243,7 @@ const OrderOverview = () => {
             {/* Shipping Details */}
             <div className="bg-white p-6 rounded-lg shadow-md mb-6">
                 <div className="flex items-center space-x-3 mb-3">
-                    <GrMapLocation className="text-2xl text-blue-500" />
+                    <GrMapLocation className="text-2xl text-[--primaryDarkShade1]" />
                     <h2 className="text-lg font-bold">Delivery Address</h2>
                 </div>
                 <p className="text-sm text-gray-600">{order.shippingAddress}</p>
@@ -255,7 +255,7 @@ const OrderOverview = () => {
             >
 
                 <div className="flex items-center space-x-3 mb-3">
-                    <CiMoneyBill className="text-2xl text-blue-500" />
+                    <CiMoneyBill className="text-2xl text-[--primaryDarkShade1]" />
                     <h2 className="text-lg font-bold">Bill Details</h2>
                 </div>
 

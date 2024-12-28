@@ -34,11 +34,15 @@ function App() {
     console.log("Color Data:", colorData);
 
     if (colorData) {
-      document.documentElement.style.setProperty("--primary", colorData.primaryColor || "white");
-      document.documentElement.style.setProperty("--primaryShade1", colorData.shades.shade1 || "white");
-      document.documentElement.style.setProperty("--primaryShade2", colorData.shades.shade2 || "#2ecc71");
-      document.documentElement.style.setProperty("--primaryShade3", colorData.shades.shade3 || "#e74c3c");
-      document.documentElement.style.setProperty("--primaryShade4", colorData.shades.shade4 || "#9b59b6");
+      document.documentElement.style.setProperty("--primary", colorData.primaryColor || "#DB2777");
+      document.documentElement.style.setProperty("--primaryShade1", colorData.shades.shade1 || "#DB2777");
+      document.documentElement.style.setProperty("--primaryShade2", colorData.shades.shade2 || "#DB2777");
+      document.documentElement.style.setProperty("--primaryShade3", colorData.shades.shade3 || "#DB2777");
+      document.documentElement.style.setProperty("--primaryShade4", colorData.shades.shade4 || "#DB2777");
+      document.documentElement.style.setProperty("--primaryDarkShade1", colorData.shades.darkShade1 || "DB2777");
+      document.documentElement.style.setProperty("--primaryDarkShade2", colorData.shades.darkShade2 || "DB2777");
+      document.documentElement.style.setProperty("--primaryDarkShade3", colorData.shades.darkShade3 || "DB2777");
+      document.documentElement.style.setProperty("--primaryDarkShade4", colorData.shades.darkShade4 || "DB2777");
     }
   }, []);
   

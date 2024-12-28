@@ -239,7 +239,7 @@ const BuyNow = () => {
     }, [isCountdownComplete, navigate]);
 
     return (
-        <div className="container mx-auto pt-5 pb-20 bg-gradient-to-r from-pink-50 to-yellow-50">
+        <div className="container mx-auto pt-5 pb-20 bg-gradient-to-r from-[--primaryShade4] to-gray-50">
             <NavigateBack className="pl-3" />
 
             <div className="bg-white p-5 rounded-3xl">
@@ -469,14 +469,14 @@ const BuyNow = () => {
                         {/* Left: Price Display */}
                         <div className="text-lg font-semibold text-gray-800">
                             <p className="text-sm font-semibold line-through text-gray-500">₹{originalPrice * quantity}</p> {/* Original Price with line-through */}
-                            <p className="text-xl font-bold text-green-600">₹{totalPrice}</p> {/* Discounted Price */}
+                            <p className="text-xl font-bold text-[--primaryDarkShade1]">₹{totalPrice}</p> {/* Discounted Price */}
                         </div>
                     </div>
 
                     {/* Right: Place Order Button */}
                     <button onClick={handlePlaceOrder}
-                        className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-gradient-to-l transition duration-300 ease-in-out">
-                        Place Order
+                        className="bg-gradient-to-r from-[--primary] to-[--primaryShade2] text-white font-bold py-2 px-6 rounded-lg hover:bg-gradient-to-l transition duration-300 ease-in-out">
+                        Pay Now
                     </button>
                 </div>
 

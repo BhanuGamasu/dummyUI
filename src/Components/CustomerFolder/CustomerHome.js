@@ -68,8 +68,8 @@ const CustomerHome = () => {
             {/* Categories Section */}
             <div className="w-full py-6 px-4 bg-gray-100">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-3xl font-semibold text-[--primary]">Categories</h2>
-                    <FaAngleDoubleRight className="text-[--primary] text-2xl" />
+                    <h2 className="text-3xl font-semibold text-[--primaryDarkShade1]">Categories</h2>
+                    <FaAngleDoubleRight className="text-[--primaryDarkShade1] text-2xl" />
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 cursor-pointer">
                     {categories.map((category, index) => (
@@ -104,8 +104,8 @@ const CustomerHome = () => {
 
                 <div className="relative z-20">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-3xl font-semibold text-[--primary]">Our Special Products</h2>
-                        <FaAngleDoubleRight className="text-[--primary] text-2xl" />
+                        <h2 className="text-3xl font-semibold text-[--primaryDarkShade1]">Our Special Products</h2>
+                        <FaAngleDoubleRight className="text-[--primaryDarkShade1] text-2xl" />
                     </div>
 
                     {/* Responsive grid layout */}
@@ -126,7 +126,7 @@ const CustomerHome = () => {
                                     <p className="text-xs sm:text-sm text-gray-500 line-through">
                                         &#8377;{product.originalPrice}
                                     </p>
-                                    <p className="text-sm sm:text-lg text-[--primary] font-semibold">
+                                    <p className="text-sm sm:text-lg text-[--primaryDarkShade1] font-semibold">
                                         &#8377;{product.discountPrice} <span className="text-gray-400">({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)</span>
                                     </p>
                                 </div>
@@ -142,8 +142,8 @@ const CustomerHome = () => {
             {/* Best Selling Products Section */}
             <div className="w-full py-6 px-4 bg-gray-100">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-3xl font-semibold text-[--primary]">Best Selling Products</h2>
-                    <FaAngleDoubleRight className="text-[--primary] text-2xl" />
+                    <h2 className="text-3xl font-semibold text-[--primaryDarkShade1]">Best Selling Products</h2>
+                    <FaAngleDoubleRight className="text-[--primaryDarkShade1] text-2xl" />
                 </div>
 
                 {/* Best Selling Products Grid */}
@@ -184,7 +184,7 @@ const CustomerHome = () => {
                                 <p className="text-xs sm:text-sm text-gray-500 line-through">
                                     &#8377;{product.originalPrice}
                                 </p>
-                                <p className="text-sm sm:text-lg text-[--primary] font-semibold">
+                                <p className="text-sm sm:text-lg text-[--primaryDarkShade1] font-semibold">
                                     &#8377;{product.discountPrice}{" "}
                                     <span className="text-gray-400">
                                         ({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)

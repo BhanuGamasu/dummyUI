@@ -47,7 +47,7 @@ const OrdersPage = () => {
   };
 
   return (
-    <div className="container mx-auto pt-5 bg-gradient-to-r from-pink-50 to-yellow-50">
+    <div className="container mx-auto pt-5 bg-gradient-to-r from-[--primaryShade4] to-gray-50">
       <NavigateBack target="/home" className="pl-3" />
       <div className="bg-white p-5 rounded-3xl rounded-bl-none rounded-br-none">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Your Orders</h1>
@@ -98,7 +98,7 @@ const OrdersPage = () => {
                         ₹{order.totalAmount}
                       </span>
                     </p>
-                    <FaAngleRight className="text-pink-600 text-2xl" />
+                    <FaAngleRight className="text-[--primaryDarkShade1] text-2xl" />
                   </div>
                 </div>
 
@@ -127,7 +127,7 @@ const OrdersPage = () => {
                         </motion.button>
                       ))}
                     </div>
-                    <p className="text-sm font-semibold text-pink-500 mt-1">
+                    <p className="text-sm font-semibold text-[--primaryDarkShade1] mt-1">
                       Rate this product
                     </p>
                   </div>

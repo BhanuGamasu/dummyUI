@@ -385,32 +385,58 @@ const AddAddress = () => {
     const handleCurrentLocation = () => {
         if (!navigator.geolocation) {
             console.error("Geolocation is not supported by your browser.");
+            alert("Your browser does not support geolocation. Please use a supported browser.");
             return;
         }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                const currentLocation = { lat: latitude, lng: longitude };
-                setLocation(currentLocation);
-                setMarkerPosition(currentLocation);
-                setMapZoom(19);
-
-                const geocoder = new window.google.maps.Geocoder();
-                geocoder.geocode({ location: currentLocation }, (results, status) => {
-                    if (status === "OK" && results[0]) {
-                        setAddress(results[0].formatted_address);
-                        setFormVisible(true);
-                    }
-                });
-            },
-            (error) => {
-                console.error("Error fetching location:", error.message);
-                alert("Unable to fetch location.");
-            },
-            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-        );
+    
+        const successCallback = (position) => {
+            const { latitude, longitude } = position.coords;
+            const currentLocation = { lat: latitude, lng: longitude };
+            setLocation(currentLocation);
+            setMarkerPosition(currentLocation);
+            setMapZoom(19);
+    
+            // Reverse Geocoding
+            const geocoder = new window.google.maps.Geocoder();
+            geocoder.geocode({ location: currentLocation }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    setAddress(results[0].formatted_address);
+                    setFormVisible(true);
+                } else {
+                    console.error("Geocoding failed:", status);
+                    alert("Unable to fetch address. Please try again.");
+                }
+            });
+        };
+    
+        const errorCallback = (error) => {
+            let message = "Unable to fetch location.";
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    message = "Location access was denied. Please allow location permissions in your browser settings.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message = "Location information is unavailable. Please check your internet or GPS.";
+                    break;
+                case error.TIMEOUT:
+                    message = "The request timed out. Please try again.";
+                    break;
+                default:
+                    message = "An unknown error occurred. Please try again.";
+            }
+            console.error("Error fetching location:", error.message);
+            alert(message);
+        };
+    
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 15000, // 15 seconds for GPS signals
+            maximumAge: 0, // Do not use cached location
+        };
+    
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
     };
+    
 
     const options = [
         { label: "Home", icon: <FaHome /> },
@@ -434,7 +460,7 @@ const AddAddress = () => {
     if (!isLoaded) return <div>Loading...</div>;
 
     return (
-        <div className="bg-gradient-to-r from-pink-50 to-yellow-50 pt-5">
+        <div className="bg-gradient-to-r from-[--primaryShade4] to-gray-50 pt-5">
             <NavigateBack className="pl-3" />
            <div className="bg-white rounded-3xl p-5 min-h-screen flex flex-col gap-4 transition-all duration-300">
              {/* Search Section */}
@@ -444,7 +470,7 @@ const AddAddress = () => {
                     placeholder="Search location..."
                     value={address}
                     onChange={handleAddressChange}
-                    className="border border-gray-300 rounded-full py-3 pl-[2.8rem] pr-4 w-full text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 shadow-sm hover:shadow-md transition-shadow duration-300"
+                    className="border border-gray-300 rounded-full py-3 pl-[2.8rem] pr-4 w-full text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[--primaryShade3] focus:border-[--primaryShade3] shadow-sm hover:shadow-md transition-shadow duration-300"
                 />
                 <div className="absolute top-1/2 left-4 transform -translate-y-1/2 text-gray-400">
                     <FaSearch className="w-5 h-5" />

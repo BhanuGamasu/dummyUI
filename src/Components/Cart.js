@@ -137,7 +137,7 @@ const Cart = () => {
     }, []);
 
     return (
-        <div className="container mx-auto pt-5 pb-20 bg-gradient-to-r from-pink-50 to-yellow-50 ">
+        <div className="container mx-auto pt-5 pb-20 bg-gradient-to-r from-[--primaryShade4] to-gray-50 ">
             <NavigateBack className="pl-3" />
             <div className="bg-white p-5 rounded-3xl">
                 <div className="relative flex items-center justify-between mb-5">
@@ -372,14 +372,14 @@ const Cart = () => {
                         {/* Left: Price Display */}
                         <div className="text-lg font-semibold text-gray-800">
                             <p className="text-sm font-semibold line-through text-gray-500">₹180</p> {/* Original Price with line-through */}
-                            <p className="text-xl font-bold text-green-600">₹{priceDetails.finalPrice.toFixed()}</p> {/* Discounted Price */}
+                            <p className="text-xl font-bold text-[--primaryDarkShade1]">₹{priceDetails.finalPrice.toFixed()}</p> {/* Discounted Price */}
                         </div>
                     </div>
 
                     {/* Right: Place Order Button */}
                     <button onClick={handleSubmit}
-                        className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-gradient-to-l transition duration-300 ease-in-out">
-                        Place Order
+                        className="bg-gradient-to-r from-[--primaryDarkShade1] to-[--primary] text-white font-bold py-2 px-6 rounded-lg hover:bg-gradient-to-l transition duration-300 ease-in-out">
+                        Pay Now
                     </button>
                 </div>
 
