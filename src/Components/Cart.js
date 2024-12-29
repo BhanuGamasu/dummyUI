@@ -19,8 +19,6 @@ const Cart = () => {
 
     const [isFavorite, setIsFavorite] = useState(false);
     const [bubbles, setBubbles] = useState([]);
-    const [showPopup, setShowPopup] = useState(false); // Toggle popup
-    const [promocode, setPromocode] = useState(""); // Promocode input
     const [couponDiscount, setCouponDiscount] = useState(0);
     const [isPromocodeApplied, setIsPromocodeApplied] = useState(false); // Promocode state
     const [appliedOffer, setAppliedOffer] = useState(null); // Stores applied offer details
@@ -104,7 +102,7 @@ const Cart = () => {
             totalPrice: priceDetails.totalPrice.toFixed(),
             gst: priceDetails.gst.toFixed(),
             finalPrice: priceDetails.finalPrice.toFixed(),
-            selectedAddress: addresses[selectedAddress],
+            address: updatedDeliveryAddress,
         };
         console.log("Order Submitted:", orderDetails);
     };
@@ -148,6 +146,7 @@ const Cart = () => {
                 {items.length === 0 ? (
                     <img
                     src={emptyCartImg}
+                    alt={"Empty Cart"}
                     className="w-full h-full"
                 />
                 ) : (

@@ -1,12 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { BsBoxSeam } from "react-icons/bs";
 import { CiMoneyBill } from "react-icons/ci";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GrMapLocation } from "react-icons/gr";
 import { RiTruckLine } from "react-icons/ri";
+import { IoIosArrowBack } from "react-icons/io";
 
 const OrderOverview = () => {
     const navigate = useNavigate();
@@ -55,16 +55,13 @@ const OrderOverview = () => {
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
             {/* Header */}
-            <div className="flex items-center mb-5">
-                <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="text-gray-600 hover:text-gray-800"
-                    onClick={handleBack}
-                >
-                    <FaArrowLeft className="text-xl" />
+            <div 
+            onClick={handleBack}
+            className="flex items-center mb-5 ml-[-6px] hover:-translate-x-1 duration-300 hover:text-gray-800 cursor-pointer">
+                <motion.button>
+                    <IoIosArrowBack className="text-2xl" />
                 </motion.button>
-                <h1 className="text-2xl font-bold ml-4 text-gray-800">Order Overview</h1>
+                <h1 className="text-2xl font-bold ml-1 text-gray-800">Order Overview</h1>
             </div>
 
             <p className="font-semibold text-sm text-gray-400 mb-2">Order ID: {order.id}</p>

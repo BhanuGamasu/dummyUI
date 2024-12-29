@@ -281,6 +281,12 @@ const AddAddress = () => {
         libraries,
     });
 
+    const [errors, setErrors] = useState({
+        house: false,
+        area: false,
+        otherLabel: false,
+    });
+
     const [address, setAddress] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [location, setLocation] = useState({ lat: 37.7749, lng: -122.4194 });
@@ -447,14 +453,33 @@ const AddAddress = () => {
     const handleFormChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
+    
+        // Clear error for the specific field
+        if (errors[name]) {
+            setErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
+        }
+    };
+
+    const validateForm = () => {
+        const newErrors = {
+            house: !formData.house.trim(),
+            area: !formData.area.trim(),
+            otherLabel: formData.saveAs === "Other" && !formData.otherLabel.trim(),
+        };
+        setErrors(newErrors);
+    
+        // Return true if no errors
+        return !Object.values(newErrors).some((error) => error);
     };
 
     const handleSaveAddress = () => {
-        const completeData = {
-            address,
-            ...formData,
-        };
-        console.log("Complete Address Data:", completeData);
+        if (validateForm()) {
+            const completeData = {
+                address,
+                ...formData,
+            };
+            console.log("Complete Address Data:", completeData);
+        }
     };
 
     if (!isLoaded) return <div>Loading...</div>;
@@ -538,24 +563,30 @@ const AddAddress = () => {
             {formVisible && (
                 <form className="space-y-4">
                     <div>
-                        <label className="block text-gray-700 mb-1">House/Flat/Block No.</label>
+                        <label className="block text-gray-700 mb-1">House/Flat/Block No *</label>
                         <input
                             type="text"
                             name="house"
                             value={formData.house}
                             onChange={handleFormChange}
-                            className="w-full px-3 py-[7px] border-[1px] rounded-md shadow-sm focus:ring-2 focus:outline-none focus:ring-blue-500 focus:border-0 border-gray-400"
+                            className={`w-full px-3 py-[7px] border-[1px] rounded-md shadow-sm focus:ring-2 focus:outline-none ${
+                                errors.house ? "border-red-500 ring-red-500" : "border-gray-400 focus:ring-blue-500"
+                            }`}
                         />
+                        {errors.house && <p className="text-red-500 text-sm mt-1">House/Flat/Block No is required.</p>}
                     </div>
                     <div>
-                        <label className="block text-gray-700 mb-1">Apartment/Road/Area</label>
+                        <label className="block text-gray-700 mb-1">Apartment/Road/Area *</label>
                         <input
                             type="text"
                             name="area"
                             value={formData.area}
                             onChange={handleFormChange}
-                            className="w-full px-3 py-[7px] border-[1px] rounded-md shadow-sm focus:ring-2 focus:outline-none focus:ring-blue-500 focus:border-0 border-gray-400"
+                            className={`w-full px-3 py-[7px] border-[1px] rounded-md shadow-sm focus:ring-2 focus:outline-none ${
+                                errors.area ? "border-red-500 ring-red-500" : "border-gray-400 focus:ring-blue-500"
+                            }`}
                         />
+                        {errors.area && <p className="text-red-500 text-sm mt-1">Apartment/Road/Area is required.</p>}
                     </div>
                     <div>
                         <label className="block text-gray-700 mb-1">Directions to Reach</label>
@@ -592,14 +623,17 @@ const AddAddress = () => {
                     {formData.saveAs === "Other" && (
                         <>
                             <div>
-                                <label className="block text-gray-700 mb-1">Save As (Label)</label>
+                                <label className="block text-gray-700 mb-1">Save As (Label) *</label>
                                 <input
                                     type="text"
                                     name="otherLabel"
                                     value={formData.otherLabel}
                                     onChange={handleFormChange}
-                                    className="w-full px-3 py-[7px] border-[1px] rounded-md shadow-sm focus:ring-2 focus:outline-none focus:ring-blue-500 focus:border-0 border-gray-400"
+                                    className={`w-full px-3 py-[7px] border-[1px] rounded-md shadow-sm focus:ring-2 focus:outline-none ${
+                                        errors.otherLabel ? "border-red-500 ring-red-500" : "border-gray-400 focus:ring-blue-500"
+                                    }`}
                                 />
+                                {errors.otherLabel && <p className="text-red-500 text-sm mt-1">Label name is required.</p>}
                             </div>
                             <div>
                                 <label className="block text-gray-700 mb-1">Alternate Phone Number</label>

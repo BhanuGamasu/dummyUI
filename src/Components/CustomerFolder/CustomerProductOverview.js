@@ -295,6 +295,33 @@ const CustomerProductOverview = () => {
         }
     };
 
+    const productDetails = {
+        title: "🌟 Amazing Product 🌟",
+        description: "🔥 This product is perfect for your daily needs! Highly recommended. 🔥",
+        link: "https://example.com/product/12345",
+        image: "https://example.com/product-image.jpg",
+    };
+
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                // Web Share API for supported devices
+                await navigator.share({
+                    title: productDetails.title,
+                    text: `${productDetails.description}\n\n🌐 Check it out here: ${productDetails.link}`,
+                });
+                console.log("Product shared successfully!");
+            } catch (error) {
+                console.error("Error sharing the product:", error);
+            }
+        } else {
+            // Fallback for WhatsApp sharing
+            const message = `📌 *${productDetails.title}*\n\n${productDetails.description}\n\n🌐 Link: ${productDetails.link}\n🖼️ Image: ${productDetails.image}`;
+            const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, "_blank");
+        }
+    }
+
     return (
         <div className="p-5 bg-gradient-to-r from-[--primaryShade4] to-gray-50 rounded-lg shadow-lg">
             <NavigateBack />
@@ -320,6 +347,7 @@ const CustomerProductOverview = () => {
                         className="absolute top-4 right-4 p-3 rounded-full bg-gray-800 bg-opacity-50 text-white z-10 cursor-pointer"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
+                        onClick={handleShare}
                     >
                         <FaShareAlt className="text-2xl" />
                     </motion.div>
@@ -342,7 +370,7 @@ const CustomerProductOverview = () => {
                         {product.rating.halfStar && <FaStarHalfAlt />}
                         <span className="ml-2 text-blue-600">({product.reviewsCount} reviews)</span>
                     </div>
-                    <p className="text-gray-600 mb-4">Any 4 chocolates of your choice from Dairy Milk Silk Bubbly 120g, Dairy Milk Silk Fruit & Nut 137g, Dairy Milk Silk Oreo 130g, Dairy Milk Silk Oreo Red Velvet, 130g, Dairy Milk Silk Hazelnut 143g, Dairy Milk Silk Roast Almond 143g, Dairy Milk Silk Mousse, 116g and Dairy Milk Silk Plain Chocolate 150g.</p>
+                    <p className="text-gray-600 mb-4 line-clamp-3">Any 4 chocolates of your choice from Dairy Milk Silk Bubbly 120g, Dairy Milk Silk Fruit & Nut 137g, Dairy Milk Silk Oreo 130g, Dairy Milk Silk Oreo Red Velvet, 130g, Dairy Milk Silk Hazelnut 143g, Dairy Milk Silk Roast Almond 143g, Dairy Milk Silk Mousse, 116g and Dairy Milk Silk Plain Chocolate 150g.</p>
 
                     {/* Weight Selection */}
                     <div className="flex gap-2 mb-6">
@@ -471,11 +499,11 @@ const CustomerProductOverview = () => {
                         >
                             <div className="text-gray-800 w-full lg:w-2/3 text-center">
                                 <h3 className="text-xl font-bold text-gray-900">Very Good</h3>
-                                <div className="flex items-center justify-center text-green-400 mb-1 mt-1">
+                                <div className="flex items-center justify-center text-[--primaryDarkShade1] mb-1 mt-1">
                                     {Array.from({ length: 4 }, (_, i) => (
-                                        <FaStar key={i} className="text-green-400" />
+                                        <FaStar key={i} className="text-[--primaryDarkShade1]" />
                                     ))}
-                                    <FaStarHalfAlt className="text-green-400" />
+                                    <FaStarHalfAlt className="text-[--primaryDarkShade1]" />
                                 </div>
                                 <p className="text-lg font-semibold text-gray-800">
                                     4.0 out of 5.0
@@ -508,11 +536,11 @@ const CustomerProductOverview = () => {
                                     >
                                         <div className="flex items-center space-x-1 text-gray-700 font-medium text-sm">
                                             <div style={{ fontSize: "18px" }}>{star}</div>
-                                            <FaStar className="text-green-400" />
+                                            <FaStar className="text-[--primaryDarkShade1]" />
                                         </div>
                                         <div className="flex-1 bg-gray-200 rounded-full h-2">
                                             <div
-                                                className="bg-gradient-to-r from-green-400 to-green-300 h-2 rounded-full"
+                                                className="bg-gradient-to-r from-[--primaryDarkShade1] via-[--primaryShade1] to-[--primaryShade2] h-2 rounded-full"
                                                 style={{
                                                     width: `${(count / product.reviewsCount) * 100}%`,
                                                 }}
@@ -705,7 +733,7 @@ const CustomerProductOverview = () => {
                             <div className="relative">
                                 <div
                                     ref={reviewRef}
-                                    className={`text-gray-700 text-sm leading-relaxed overflow-auto max-h-[200px] no-scrollbar ${isFullReviewVisible ? "" : "line-clamp-3"
+                                    className={`text-gray-700 text-sm leading-relaxed overflow-auto max-h-[200px] small-scrollbar ${isFullReviewVisible ? "" : "line-clamp-3"
                                         }`}
                                 >
                                     {selectedReview.comment}

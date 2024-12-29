@@ -64,4 +64,23 @@ code {
   scrollbar-width: none; /* Hides scrollbar in Firefox */
 }
 
+.small-scrollbar::-webkit-scrollbar {
+  height: 1px;
+  width: 1px;
+}
+
+.small-scrollbar {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: var(--primaryShade2) #f1f1f1; /* Thumb and track colors */
+}
+
+.small-scrollbar {
+  -ms-overflow-style: none; /* Hides scrollbar in Internet Explorer 10+ */
+  scrollbar-width: 2px !important; /* Hides scrollbar in Firefox */
+}
+
+:root {
+  --swiper-theme-color: var(--primaryDarkShade1) !important;
+}
+
 

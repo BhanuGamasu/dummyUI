@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaBars, FaSearch, FaTimes, FaChevronDown, FaChevronRight } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom"; // React Router hook for navigation
+import { useNavigate, useLocation } from "react-router-dom"; // React Router hook for navigation
 import { useSelector } from "react-redux"; // Redux hook
 import { AiOutlineShoppingCart, AiFillHome } from "react-icons/ai";
 import { motion } from 'framer-motion';
@@ -16,6 +16,7 @@ const Header = () => {
   const sidebarRef = useRef(null);
   const cartCount = useSelector((state) => state.cart.cartCount); // Redux selector for cart count
   const navigate = useNavigate(); // Navigation function from React Router
+  const location = useLocation(); // Get the current location
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -42,6 +43,15 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
+      {location.pathname === "/home" && ( // Only show the moving text on the home page
+        <div className="relative bg-gradient-to-r from-primaryShade1 via-primaryShade2 to-primaryShade3 text-black">
+          <div className="overflow-hidden">
+            <p className="text-lg md:text-lg font-semibold whitespace-nowrap animate-scroll p-3 will-change-transform text-smooth">
+              🚚 Deliveries only applicable to selected locations. 📍 Check availability in your area! 🌍
+            </p>
+          </div>
+        </div>
+      )}
       {/* Mobile View */}
       <div className="lg:hidden px-4 py-4">
         <div className="flex items-center justify-between">
@@ -62,7 +72,7 @@ const Header = () => {
               <AiOutlineShoppingCart />
             </button>
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-[--primaryShade1] text-white text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-gray-200">
+              <span className="absolute -top-1 -right-1 bg-[--primary] text-white text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-md border-2 border-gray-200">
                 {cartCount}
               </span>
             )}
@@ -275,7 +285,7 @@ const Header = () => {
                       />
                       {/* Category Name */}
                       <a
-                        href="#"
+                        href="/home"
                         className="block text-gray-700 hover:text-white hover:bg-[--primaryShade1] py-2 px-3 rounded-lg transition-all duration-200 w-full"
                       >
                         {item}

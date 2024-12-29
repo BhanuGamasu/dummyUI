@@ -68,7 +68,7 @@ const CustomerHome = () => {
             {/* Categories Section */}
             <div className="w-full py-6 px-4 bg-gray-100">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-3xl font-semibold text-[--primaryDarkShade1]">Categories</h2>
+                    <h2 className="text-3xl font-semibold text-[--primaryDarkShade1] max-md:text-2xl">Categories</h2>
                     <FaAngleDoubleRight className="text-[--primaryDarkShade1] text-2xl" />
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 cursor-pointer">
@@ -104,7 +104,7 @@ const CustomerHome = () => {
 
                 <div className="relative z-20">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-3xl font-semibold text-[--primaryDarkShade1]">Our Special Products</h2>
+                        <h2 className="text-3xl font-semibold text-[--primaryDarkShade1] max-md:text-2xl">Our Special Products</h2>
                         <FaAngleDoubleRight className="text-[--primaryDarkShade1] text-2xl" />
                     </div>
 
@@ -130,7 +130,7 @@ const CustomerHome = () => {
                                         &#8377;{product.discountPrice} <span className="text-gray-400">({((product.originalPrice - product.discountPrice) / product.originalPrice * 100).toFixed(0)}% off)</span>
                                     </p>
                                 </div>
-                                <span className="inline-block mt-2 px-3 py-1 bg-green-100 text-green-600 font-semibold rounded-full text-xs sm:text-sm mx-auto">
+                                <span className="inline-block mt-2 px-3 py-1 bg-[--primaryShade3] text-[--primaryDarkShade2] font-semibold rounded-full text-xs sm:text-sm mx-auto">
                                     {product.label}
                                 </span>
                             </div>
@@ -142,7 +142,7 @@ const CustomerHome = () => {
             {/* Best Selling Products Section */}
             <div className="w-full py-6 px-4 bg-gray-100">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-3xl font-semibold text-[--primaryDarkShade1]">Best Selling Products</h2>
+                    <h2 className="text-3xl font-semibold text-[--primaryDarkShade1] max-md:text-2xl">Best Selling Products</h2>
                     <FaAngleDoubleRight className="text-[--primaryDarkShade1] text-2xl" />
                 </div>
 
@@ -202,7 +202,7 @@ const CustomerHome = () => {
                 <div className="absolute inset-0 opacity-10 pointer-events-none"></div>
 
                 <div className="flex justify-between items-center mb-8">
-                    <h2 className="text-3xl font-semibold text-yellow-700 tracking-wider">Occasion Packs</h2>
+                    <h2 className="text-3xl font-semibold text-yellow-700 tracking-wider max-md:text-2xl">Occasion Packs</h2>
                     <FaAngleDoubleRight className="text-yellow-700 text-2xl" />
                 </div>
 
