@@ -84,12 +84,12 @@ const Header = () => {
           initial={{ x: '-100%' }}
           animate={{ x: isSidebarOpen ? '0%' : '-100%' }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="fixed top-0 -left-[1px] h-full bg-white w-64 shadow-md z-50"
+          className="fixed top-0 left-0 h-full bg-white w-64 shadow-lg z-50"
           ref={sidebarRef}
         >
           <div className="flex items-center justify-between p-4 border-b">
             <h2 className="font-bold text-lg text-gray-700">Menu</h2>
-            <button onClick={toggleSidebar}>
+            <button onClick={toggleSidebar} className="text-gray-700 hover:text-[--primary]">
               <FaTimes className="h-6 w-6 text-gray-700" />
             </button>
           </div>
@@ -114,7 +114,7 @@ const Header = () => {
                 </li>
               </ul>
 
-              <ul className="space-y-4 mt-2">
+              <ul className="space-y-4 mt-4">
                 {[
                   {
                     label: "Categories",
@@ -161,7 +161,7 @@ const Header = () => {
                 ))}
               </ul>
 
-              <ul className='space-y-4 mt-2'>
+              <ul className='space-y-4 mt-4'>
                 <li>
                   <button
                     onClick={() => {
@@ -181,7 +181,7 @@ const Header = () => {
               </ul>
 
 
-              <ul className='space-y-4 mt-2'>
+              <ul className='space-y-4 mt-4'>
                 <li>
                   <button
                     onClick={() => {
@@ -192,10 +192,10 @@ const Header = () => {
                     }
                     className="text-gray-800 hover:text-[--primary] font-medium focus:outline-none transition-colors duration-300 w-full text-left flex items-center"
                   >
-                    <BsBoxSeamFill
+                    <TbMessageChatbotFilled
                       className="transition-transform duration-200 mr-1"
                     />
-                    About
+                    About Us
                   </button>
                 </li>
               </ul>

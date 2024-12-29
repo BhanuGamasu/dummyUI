@@ -23,9 +23,57 @@ const RateProductPopup = ({ isOpen, onClose }) => {
 
     const handlePhotoUpload = (event) => {
         const files = Array.from(event.target.files);
-        const photos = files.map((file) => URL.createObjectURL(file));
-        setUploadedPhotos((prevPhotos) => [...prevPhotos, ...photos]);
+    
+        files.forEach((file) => {
+            const reader = new FileReader();
+    
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+    
+                img.onload = () => {
+                    console.log(`Original size of ${file.name}: ${Math.round(file.size / 1024)} KB`);
+    
+                    const canvas = document.createElement("canvas");
+                    const MAX_WIDTH = 800;
+                    const MAX_HEIGHT = 800;
+                    let width = img.width;
+                    let height = img.height;
+    
+                    if (width > MAX_WIDTH || height > MAX_HEIGHT) {
+                        if (width > height) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        } else {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+    
+                    canvas.width = width;
+                    canvas.height = height;
+    
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, width, height);
+    
+                    canvas.toBlob(
+                        (blob) => {
+                            if (blob) {
+                                console.log(`Optimized size of ${file.name}: ${Math.round(blob.size / 1024)} KB`);
+                                const optimizedPhoto = URL.createObjectURL(blob);
+                                setUploadedPhotos((prevPhotos) => [...prevPhotos, optimizedPhoto]);
+                            }
+                        },
+                        "image/jpeg",
+                        0.8 // Compression quality (0 to 1)
+                    );
+                };
+            };
+    
+            reader.readAsDataURL(file);
+        });
     };
+    
 
     return (
         <AnimatePresence>

@@ -671,8 +671,6 @@ const CustomerProductOverview = () => {
                 </div>
             </div>
 
-
-
             {/* Modal for full image and review */}
             {selectedReview && (
                 <div
