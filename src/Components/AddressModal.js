@@ -11,6 +11,7 @@ const AddressModal = ({
     setSelectedAddress,
     onEdit,
     onDelete,
+    popupStyles,
     onDefaultChange, // Callback to sync default address outside
 }) => {
     const navigate = useNavigate();
@@ -72,7 +73,7 @@ const AddressModal = ({
                             stiffness: 70,
                             damping: 15,
                         }}
-                        className="bg-white mb-[73px] rounded-lg rounded-bl-none rounded-br-none shadow-lg w-full md:w-[50%] max-h-[50vh] p-6 overflow-y-auto transform no-scrollbar"
+                        className={`bg-white mb-[73px] rounded-lg rounded-bl-none rounded-br-none shadow-lg w-full md:w-[50%] max-h-[50vh] p-6 overflow-y-auto transform no-scrollbar ${popupStyles}`}
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="flex justify-between">

@@ -9,6 +9,8 @@ import logoImg from "../logoImg.webp";
 import { BsBoxSeamFill } from "react-icons/bs";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import { BiSolidCategory, BiSolidHome } from "react-icons/bi";
+import AddressModal from './AddressModal';
+import ProfileHeader from './ProfileHeader';
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -18,9 +20,53 @@ const Header = () => {
   const navigate = useNavigate(); // Navigation function from React Router
   const location = useLocation(); // Get the current location
 
+  const [showAddressModal, setShowAddressModal] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [updatedDeliveryAddress, setUpdatedDeliveryAddress] = useState('');
+
+
+  const addresses = [
+    {
+      name: "Ram Kumawat",
+      details:
+        "659, Venkat Enclave, TY Raju Road, Whitefields, Hyderabad-499963, Arunodaya Colony, Madhapur, Hyderabad, Telangana - 499963",
+      phone: "9876543210",
+    },
+    {
+      name: "Shyam Verma",
+      details:
+        "245, Lotus Apartments, Green Park, Mumbai-400053, Maharashtra",
+      phone: "8765432109",
+    },
+  ];
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const handleEditAddress = (index) => {
+    console.log("Edit address at index:", index);
+  };
+
+  const handleDeleteAddress = (index) => {
+    console.log("Delete address at index:", index);
+  };
+
+  // Log the selected address whenever it changes
+  useEffect(() => {
+    if (selectedAddress !== null) {
+      setShowAddressModal(false);
+      setUpdatedDeliveryAddress(addresses[selectedAddress]);
+      console.log("Selected Address:", addresses[selectedAddress]);
+    }
+  }, [selectedAddress]);
+
+  useEffect(() => {
+    const savedDefaultIndex = localStorage.getItem("defaultAddressIndex");
+    if (addresses.length > 0 && !updatedDeliveryAddress) {
+      setUpdatedDeliveryAddress(addresses[savedDefaultIndex]); // Set the first address as default
+    }
+  }, [addresses, updatedDeliveryAddress]);
 
   // Close sidebar when clicking outside
   useEffect(() => {
@@ -45,11 +91,26 @@ const Header = () => {
     <header className="bg-white shadow-md sticky top-0 z-50">
       {location.pathname === "/home" && ( // Only show the moving text on the home page
         <div className="relative bg-gradient-to-r from-primaryShade1 via-primaryShade2 to-primaryShade3 text-black">
-          <div className="overflow-hidden">
-            <p className="text-lg md:text-lg font-semibold whitespace-nowrap animate-scroll p-3 will-change-transform text-smooth">
-              🚚 Deliveries only applicable to selected locations. 📍 Check availability in your area! 🌍
-            </p>
-          </div>
+
+          {/* Address Component */}
+          <ProfileHeader
+            name={updatedDeliveryAddress?.name || ""}
+            details={updatedDeliveryAddress?.details || ""}
+            phone={updatedDeliveryAddress?.phone || ""}
+            onChangeAddress={() => setShowAddressModal(true)}
+          />
+
+          {/* Address Modal */}
+          <AddressModal
+            show={showAddressModal}
+            onClose={() => setShowAddressModal(false)}
+            addresses={addresses}
+            selectedAddress={selectedAddress}
+            setSelectedAddress={setSelectedAddress}
+            onEdit={handleEditAddress}
+            onDelete={handleDeleteAddress}
+            popupStyles="mb-[-1px]"
+          />
         </div>
       )}
       {/* Mobile View */}
